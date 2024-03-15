@@ -1,5 +1,5 @@
 <?php
-include './inicializar_banco.php';
+include '../inicializar_banco.php';
 
 $nome = $_POST['nome'];
 $email = $_POST['email'];

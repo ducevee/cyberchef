@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['is_admin'] !== 1) {
-    header('Location: ../paginas/login.php');
+    header('Location: ../../paginas/login.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
     ]);
 
     // Redirecionar de volta para a página de administração
-    header('Location: ../paginas/home.php');
+    header('Location: ../../paginas/home.php');
 } catch (PDOException $e) {
     exit("Erro ao atualizar usuário: " . $e->getMessage());
 }

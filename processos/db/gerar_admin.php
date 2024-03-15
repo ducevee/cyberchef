@@ -1,6 +1,6 @@
 <?php
 
-include './inicializar_banco.php'; // Assegure-se de que este caminho está correto
+include '../inicializar_banco.php'; // Assegure-se de que este caminho está correto
 
 $emailAdmin = "admin@admin.com"; // Use o e-mail do usuário administrador
 $senha = "admin"; // A senha desejada

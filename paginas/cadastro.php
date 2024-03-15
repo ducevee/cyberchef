@@ -7,7 +7,7 @@
 <body>
 
 <div class="form-container">
-    <form action="../processos/cadastrar_usuario.php" method="post">
+    <form action="../processos/db/cadastrar_usuario.php" method="post">
         <h2>Cadastro</h2>
         Nome: <input type="text" name="nome" required><br>
         E-mail: <input type="email" name="email" required><br>

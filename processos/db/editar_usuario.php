@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['is_admin'] !== 1) {
-    header('Location: ../paginas/login.php');
+    header('Location: ../../paginas/login.php');
     exit;
 }
 
@@ -33,7 +33,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuário</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Ajuste o caminho conforme necessário -->
+    <link rel="stylesheet" href="../../css/style.css"> <!-- Ajuste o caminho conforme necessário -->
 </head>
 <body>
     <h2>Editar Usuário</h2>

@@ -41,8 +41,8 @@ if ($is_admin) {
                     <td><?php echo htmlspecialchars($usuario['nome']); ?></td>
                     <td><?php echo htmlspecialchars($usuario['email']); ?></td>
                     <td>
-                        <a href="../processos/editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="editar-btn">Editar</a>
-                        <a href="../processos/deletar_usuario.php?id=<?php echo $usuario['id']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
+                        <a href="../processos/db/editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="editar-btn">Editar</a>
+                        <a href="../processos/db/deletar_usuario.php?id=<?php echo $usuario['id']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
                     </td>
                 </tr>
             <?php endwhile; ?>
