@@ -1,0 +1,194 @@
+/* Reset básico para remover margens e padding padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.link-cadastro {
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
+
+.link-cadastro a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link-cadastro a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para a página inicial */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.editar-btn, .excluir-btn {
+    padding: 6px 12px;
+    text-align: center;
+    margin-right: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editar-btn {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.editar-btn:hover {
+    background-color: #ec971f;
+}
+
+.excluir-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+.excluir-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+}
+
+.logout-btn {
+    position: fixed; /* Fixo em relação à viewport */
+    bottom: 20px; /* 20 pixels da parte inferior */
+    left: 50%; /* Centralizar horizontalmente */
+    transform: translateX(-50%); /* Deslocamento para centralizar perfeitamente */
+    display: block; /* Usar block para permitir transformações */
+    padding: 10px 15px;
+    background-color: #d9534f; /* Vermelho para indicar a ação de sair */
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1000; /* Garantir que fique sobre outros elementos */
+}
+
+
+.logout-btn:hover {
+    background-color: #c9302c; /* Um vermelho mais escuro para o hover */
+}
+
+.home-page {
+    align-items: flex-start; /* Isso fará com que o conteúdo comece do topo da página */
+    padding-top: 20px; /* Isso adiciona um pouco de espaço no topo */
+}
+
+.home-page h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Botão de sair */
+.logout-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 20px; /* Ajuste conforme necessário para posicionar na parte inferior */
+    background-color: #d9534f;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    position: fixed; /* Faz o botão ficar fixo na tela */
+    bottom: 20px; /* Posiciona o botão na parte inferior da tela */
+    left: 50%; /* Centraliza o botão */
+    transform: translateX(-50%); /* Ajusta a centralização */
+}
+
+/* Ajuste para a tabela de usuários */
+.home-page table {
+    margin-top: 0; /* Remova a margem se houver */
+}
