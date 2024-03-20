@@ -1,9 +1,9 @@
 <?php
 
-include '../inicializar_banco.php'; // Assegure-se de que este caminho está correto
+include '../inicializar_banco.php';
 
-$emailAdmin = "admin@admin.com"; // Use o e-mail do usuário administrador
-$senha = "admin"; // A senha desejada
+$emailAdmin = "admin@admin.com"; 
+$senha = "admin"; 
 $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
 try {

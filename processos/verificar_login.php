@@ -18,10 +18,12 @@ try {
         $_SESSION['loggedin'] = true;
         $_SESSION['is_admin'] = $usuario['is_admin']; // Armazenar se o usuário é admin
 
-
-
-        // Redirecionar para a página home
-        header("Location: ../paginas/home.php");
+        if ($usuario['is_admin'] == 1) {
+            header('Location: ../paginas/home_admin.php');
+        } else {
+            header('Location: ../paginas/home_usuario.php');
+        }
+        
     } else {
         echo "E-mail ou senha inválidos!";
     }
