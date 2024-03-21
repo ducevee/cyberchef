@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_
 include '../processos/inicializar_banco.php';
 
 // Prepara uma consulta SQL para buscar usuários
-$stmt = $pdo->query("SELECT id, nome, email FROM usuarios");
+$stmt = $pdo->query("SELECT id, nome, email, data_criacao FROM usuarios");
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +25,7 @@ $stmt = $pdo->query("SELECT id, nome, email FROM usuarios");
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
+            <th>Data de Criação</th> 
             <th>Ações</th>
         </tr>
         <?php while ($usuario = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
@@ -32,6 +33,7 @@ $stmt = $pdo->query("SELECT id, nome, email FROM usuarios");
                 <td><?php echo htmlspecialchars($usuario['id']); ?></td>
                 <td><?php echo htmlspecialchars($usuario['nome']); ?></td>
                 <td><?php echo htmlspecialchars($usuario['email']); ?></td>
+                <td><?php echo htmlspecialchars($usuario['data_criacao']); ?></td> 
                 <td>
                     <a href="../processos/db/editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="editar-btn">Editar</a>
                     <a href="../processos/db/deletar_usuario.php?id=<?php echo $usuario['id']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
