@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
+
+:root{
+    --rosa-fraco:#FFB4D9;
+    --rosa-medio: #e07bb1;
+    --rosa-forte: #DD5CA0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Maven Pro', sans-serif;
+    color: #fff;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rosa-forte) var(--rosa-fraco);
+}
+
+/*Scroll da página*/
+*::-webkit-scrollbar {
+    width: 8px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--rosa-fraco);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--rosa-forte);
+    border-radius: 10px;
+    border: 1px solid var(--rosa-fraco);
+}
+
+/*Header*/
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80px;
+    background: var(--rosa-forte);
+}
+
+.navHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px 0 25px;
+    width: 100%;
+    height: 100%;
+    gap: 25px;
+}
+
+.search-container {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--rosa-medio);
+    padding: 5px 10px;
+    border-radius: 30px;
+    
+}
+
+.search-input {
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+    width: 100%
+}
+
+.search-input::placeholder{
+    color: #fff;
+    opacity: 0.70;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#link-logo{
+    text-decoration:none;
+    height: 3.7em;
+}
+
+#logo{
+    height: 3.7em;
+}
+
+.linksHeader{
+    text-decoration:none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.07em;
+    color: #fff;
+}
+
+#lista ul{
+    padding: 0;
+    margin: 0;
+}
+
+#lista li{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    height: 30px;
+    border-radius: 30px;
+    background-color: var(--rosa-medio);
+}
+
+#lista a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 15px 0 15px;
+}
+
+#lista li:nth-child{
+    padding-right: 0;
+}
+
+body {
+    background-color: #fff;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#img-login{
+    width: 20vw;
+}
+  
+.signup-form {
+    background-color: var(--rosa-fraco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 30vw;
+}
+
+.signup-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-input{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 10px 0;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--rosa-forte);
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: var(--rosa-medio);
+}
+
+input:focus {
+    outline: none;
+}
+
+.link-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.link-login a {
+    color: var(--rosa-forte);
+    text-decoration: none;
+}
+
+.link-login a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Estilos para a página inicial */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.editar-btn, .excluir-btn {
+    padding: 6px 12px;
+    text-align: center;
+    margin-right: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editar-btn {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.editar-btn:hover {
+    background-color: #ec971f;
+}
+
+.excluir-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+.excluir-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+}
+
+.logout-btn {
+    position: fixed; /* Fixo em relação à viewport */
+    bottom: 20px; /* 20 pixels da parte inferior */
+    left: 50%; /* Centralizar horizontalmente */
+    transform: translateX(-50%); /* Deslocamento para centralizar perfeitamente */
+    display: block; /* Usar block para permitir transformações */
+    padding: 10px 15px;
+    background-color: #d9534f; /* Vermelho para indicar a ação de sair */
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1000; /* Garantir que fique sobre outros elementos */
+}
+
+
+.logout-btn:hover {
+    background-color: #c9302c; /* Um vermelho mais escuro para o hover */
+}
+
+.home-page {
+    align-items: flex-start; /* Isso fará com que o conteúdo comece do topo da página */
+    padding-top: 20px; /* Isso adiciona um pouco de espaço no topo */
+}
+
+.home-page h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Botão de sair */
+.logout-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 20px; /* Ajuste conforme necessário para posicionar na parte inferior */
+    background-color: #d9534f;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    position: fixed; /* Faz o botão ficar fixo na tela */
+    bottom: 20px; /* Posiciona o botão na parte inferior da tela */
+    left: 50%; /* Centraliza o botão */
+    transform: translateX(-50%); /* Ajusta a centralização */
+}
+
+/* Ajuste para a tabela de usuários */
+.home-page table {
+    margin-top: 0; /* Remova a margem se houver */
+}
