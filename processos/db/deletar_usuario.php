@@ -14,7 +14,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $stmt = $pdo->prepare("DELETE FROM usuarios WHERE id = ?");
         $stmt->execute([$id]);
 
-        header('Location: ../../paginas/home.php');
+        header('Location: ../../paginas/home_admin.php');
     } catch (Exception $e) {
         exit('Não foi possível excluir o usuário: ' . $e->getMessage());
     }

@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Chef - Nova Conta</title>
     <link rel="stylesheet" href="../css/style_cadastro.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function validarSenha() {
+            var senha = document.getElementById("password").value;
+            var erro = document.getElementById("erro-senha");
+
+            var regex = /(?=.*[!@#$%^&*])/; // Esta expressão regular busca por pelo menos um caractere especial
+            if(senha.length < 8 || !regex.test(senha)) {
+                erro.textContent = "A senha deve ter pelo menos 8 caracteres e conter um caractere especial.";
+                return false; // Impede o envio do formulário
+            }
+            erro.textContent = ""; 
+            return true; 
+        }
+    </script>
   </head>
   <body>
     <header>
@@ -39,27 +54,25 @@
     <main>
       <img src="../css/img/batata_frita_animado.png" alt="logo" id="img-login">
 
-      <form action="../processos/db/cadastrar_usuario.php" method="post" class="signup-form">
+      <form action="../processos/db/cadastrar_usuario.php" method="post" class="signup-form" onsubmit="return validarSenha()">
         <h2>Criar uma nova Conta</h2>
-    
+
         <label for="nome">Nome:</label>
         <input class="form-input" type="text" id="nome" name="nome" required><br>
-    
+
         <label for="email">Email:</label><br>
         <input class="form-input" type="email" id="email" name="email" required><br>
-    
+
         <label for="password">Senha:</label><br>
         <input class="form-input" type="password" id="password" name="senha" required><br>
-    
+        <span id="erro-senha" style="color: red;"></span><br> <!-- Mensagem de erro para a senha -->
         <input type="submit" value="Cadastrar"><br>
-    
+
         <div class="link-login">
             Já tem conta? <a href="login.php">Acesse aqui</a>
         </div>
     </form>
-
-
-      <img src="../css/img/waffle_animado.png" alt="logo" id="img-login">
+    <img src="../css/img/waffle_animado.png" alt="logo" id="img-login">
     </main>
   </body>
 </html>
