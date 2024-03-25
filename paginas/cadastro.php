@@ -54,7 +54,7 @@
     <main>
       <img src="../css/img/batata_frita_animado.png" alt="logo" id="img-login">
 
-      <form action="../processos/db/cadastrar_usuario.php" method="post" class="signup-form" onsubmit="return validarSenha()">
+      <form action="../processos/db/cadastrar_usuario.php" method="post" class="login-form" onsubmit="return validarSenha()">
         <h2>Criar uma nova Conta</h2>
 
         <label for="nome">Nome:</label>
@@ -68,7 +68,7 @@
         <span id="erro-senha" style="color: red;"></span><br> <!-- Mensagem de erro para a senha -->
         <input type="submit" value="Cadastrar"><br>
 
-        <div class="link-login">
+        <div class="link-form">
             Já tem conta? <a href="login.php">Acesse aqui</a>
         </div>
     </form>
