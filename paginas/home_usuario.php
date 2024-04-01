@@ -20,6 +20,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <h2>Bem-vindo à sua Página Inicial</h2>
     <!-- Conteúdo para usuários comuns -->
     <!-- Você pode adicionar mais conteúdo aqui -->
+    <a href="../paginas/receita.php">CLIQUE AQUI</a>
     <a href="../processos/logout.php" class="logout-btn">Sair</a>
 </body>
 </html>

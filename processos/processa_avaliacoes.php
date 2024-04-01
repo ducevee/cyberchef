@@ -13,10 +13,13 @@ try {
     $estrela = (int) filter_input(INPUT_POST, 'estrela', FILTER_DEFAULT); // Cast to integer
     $mensagem = filter_input(INPUT_POST, 'mensagem', FILTER_DEFAULT);
 
+    // Recuperar ID do usuário da sessão
+    $id_usuario = $_SESSION['usuario_id'];
+
     // CADASTRAR NO BANCO
     $query_avaliacoes = "INSERT INTO avaliacao (qtde_estrelas, mensagem, created, fk_id_usuario) VALUES (:qtde_estrelas, :mensagem, :created, :fk_id_usuario)";
 
-    $cad_avaliacoes = $conn->prepare($query_avaliacoes);
+    $cad_avaliacoes = $pdo->prepare($query_avaliacoes);
 
     $cad_avaliacoes->bindParam(':qtde_estrelas', $estrela, PDO::PARAM_INT);
     $cad_avaliacoes->bindParam(':mensagem', $mensagem, PDO::PARAM_STR);

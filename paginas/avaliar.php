@@ -3,8 +3,6 @@ session_start();
 // Verificar se o usuário está logado
 if (isset($_SESSION['id_usuario'])) {
     $id_usuario = $_SESSION['id_usuario'];
-} else {
-    header("Location: ../paginas/login.php");
 }
 
 ?>

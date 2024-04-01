@@ -1,11 +1,6 @@
 <?php
-include_once '../processos/inicializar_banco.php';
-
 session_start();
-
-if (!$conn) {  
-    die("Falha na conexão: " . mysqli_connect_error());
-}
+include_once '../processos/inicializar_banco.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,11 +18,13 @@ if (!$conn) {
     <p><img src="../css/img/polenta.jpeg" alt=""></p>
 
     <?php 
-    if (isset($_SESSION['id_usuario'])) {
-        $id_usuario = $_SESSION['id_usuario'];
-        echo '<a href="avaliar.php">Clique aqui para avaliar essa receita</a><br>';
-    }
-    include '../processos/listar_avaliacoes.php';
+      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        echo '<a href="../paginas/avaliar.php">Clique aqui para avaliar essa receita</a><br>';
+      } 
+      else {
+        echo 'Você precisa estar logado para avaliar esta receita.';
+      }
+      include '../processos/listar_avaliacoes.php';
     ?>
 </body>
 </html>

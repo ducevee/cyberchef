@@ -1,10 +1,6 @@
 <?php
 include_once '../processos/inicializar_banco.php';
 
-if (!$conn) {  
-    die("Falha na conexão: " . mysqli_connect_error());
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -20,14 +16,16 @@ if (!$conn) {
     <h1>Avaliações dos Usuários</h1>
 
     <?php
-        $query_avaliacoes = "SELECT a.id_avaliacao, a.qtde_estrelas, a.mensagem, a.created, u.id AS id_usuario FROM avaliacao AS a INNER JOIN usuarios AS u ON a.fk_id_usuario = u.id ORDER BY a.id_avaliacao DESC";
-        $result_avaliacoes = $conn->prepare($query_avaliacoes);
+        $query_avaliacoes = "SELECT a.id_avaliacao, a.qtde_estrelas, a.mensagem, a.created, u.id AS id_usuario, u.nome as usr 
+        FROM avaliacao AS a 
+        INNER JOIN usuarios AS u ON a.fk_id_usuario = u.id ORDER BY a.id_avaliacao DESC";
+        $result_avaliacoes = $pdo->prepare($query_avaliacoes);
         $result_avaliacoes->execute();
 
         if ($result_avaliacoes->rowCount() > 0) {  // Verificação de resultados
             while ($row_avaliacao = $result_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
                 extract($row_avaliacao);
-                echo "<p>Avaliação feita por: $id_usuario <br> $created </p>";
+                echo "<p>Avaliação feita por: $usr <br> $created </p>";
 
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $qtde_estrelas) {
