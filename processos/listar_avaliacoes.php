@@ -16,15 +16,25 @@ include_once '../processos/inicializar_banco.php';
     <h1>Avaliações dos Usuários</h1>
 
     <?php
+        include_once '../processos/inicializar_banco.php';
+
         $query_avaliacoes = "SELECT a.id_avaliacao, a.qtde_estrelas, a.mensagem, a.created, u.id AS id_usuario, u.nome as usr 
         FROM avaliacao AS a 
         INNER JOIN usuarios AS u ON a.fk_id_usuario = u.id ORDER BY a.id_avaliacao DESC";
+
         $result_avaliacoes = $pdo->prepare($query_avaliacoes);
         $result_avaliacoes->execute();
 
-        if ($result_avaliacoes->rowCount() > 0) {  // Verificação de resultados
+        $totalEstrelas = 0;
+        $totalAvaliacoes = 0;
+
+        if ($result_avaliacoes->rowCount() > 0) {  
             while ($row_avaliacao = $result_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
                 extract($row_avaliacao);
+                
+                $totalEstrelas += $qtde_estrelas;
+                $totalAvaliacoes++;
+                
                 echo "<p>Avaliação feita por: $usr <br> $created </p>";
 
                 for ($i = 1; $i <= 5; $i++) {
@@ -37,10 +47,14 @@ include_once '../processos/inicializar_banco.php';
 
                 echo "<p>Comentário: $mensagem</p><br><hr>";
             }
+            
+            $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
+            echo "<p>Média das avaliações: $mediaAvaliacoes</p>";
         } else {
             echo "<p>Não há avaliações cadastradas.</p>"; 
         }
-    ?>
+?>
+
 
 </body>
 </html>

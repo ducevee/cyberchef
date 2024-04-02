@@ -1,11 +1,13 @@
 <?php
 session_start();
-// Verificar se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
-    $id_usuario = $_SESSION['id_usuario'];
+if (isset($_SESSION['usuario_id'])) {
+    $id_usuario = $_SESSION['usuario_id'];
+} else {
+    header("Location: ../paginas/login.php");
+    exit(); 
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,8 +18,6 @@ if (isset($_SESSION['id_usuario'])) {
     <link rel="stylesheet" href="../css/style_avaliacao.css"/>
 </head>
 <body>
-    <!--<a href="index.php">Avaliar</a><br>
-    <a href="listar_avaliacoes.php">Listar</a><br><br>-->
 <h1>Avalie</h1>
 
 <?php
@@ -43,6 +43,8 @@ if(isset($_SESSION['msg'])){
     <label for="estrela5"><i class="opcao fa" aria-hidden="true"></i></label>
     <input type="radio" name="estrela" id="estrela5" value="5" > <br><br>
     <textarea name="mensagem" id="" cols="50" rows="4" placeholder="Digite seu comentário"></textarea> <br><br>
+    <label for="foto">Inclua uma foto para complementar sua avaliação (opcional): </label><br><br>
+    <input type="file" id="foto" name="foto" accept="image/*"><br><br>
 
     <input type="submit" value="cadastrar";>
     

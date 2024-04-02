@@ -22,8 +22,8 @@ include_once '../processos/inicializar_banco.php';
         echo '<a href="../paginas/avaliar.php">Clique aqui para avaliar essa receita</a><br>';
       } 
       else {
-        echo 'Você precisa estar logado para avaliar esta receita.';
-      }
+        echo '<p>Você precisa estar logado para avaliar esta receita.</p>';
+        echo '<a href="../paginas/login.php">Clique aqui para logar</a><br>';}
       include '../processos/listar_avaliacoes.php';
     ?>
 </body>
