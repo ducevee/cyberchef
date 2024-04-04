@@ -27,7 +27,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true){
         $cad_avaliacoes->bindParam(':fk_id_usuario', $id_usuario, PDO::PARAM_INT); 
 
         if ($cad_avaliacoes->execute()) {
-          $_SESSION['msg'] = "<p>Avaliação cadastrada com sucesso.</p>";
+          $_SESSION['msg'] = "Avalição cadastrada com sucesso!";
         } else {
           throw new PDOException("Erro ao cadastrar avaliação.");
         }
@@ -42,7 +42,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true){
   }
 
  
-  header("Location: ../paginas/avaliar.php");
+  header("Location: ../paginas/receita.php");
   exit(); 
 } else {
   

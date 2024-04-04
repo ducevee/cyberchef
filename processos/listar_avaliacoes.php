@@ -1,6 +1,8 @@
 <?php
 include_once '../processos/inicializar_banco.php';
 
+if (!isset($_SESSION))
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -44,12 +46,17 @@ include_once '../processos/inicializar_banco.php';
                         echo '<i class="estrela-vazia fa-solid fa-star"></i>';
                     }
                 }
-
-                echo "<p>Comentário: $mensagem</p><br><hr>";
+                echo "<p>Comentário: $mensagem</p>";
+                if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
+                    echo "<a href='../processos/excluir_avaliacao.php?id_avaliacao=$id_avaliacao'>Excluir avaliação</a>";
+                }
+                echo "<br><hr>";
+               
             }
             
             $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
-            echo "<p>Média das avaliações: $mediaAvaliacoes</p>";
+            $mediaFormatada = sprintf("%.1f", $mediaAvaliacoes); //vai limitar o numéro de casas decimais
+            echo "<p>Média das avaliações: $mediaFormatada</p>";
         } else {
             echo "<p>Não há avaliações cadastradas.</p>"; 
         }
