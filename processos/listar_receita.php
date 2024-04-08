@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include_once '../processos/inicializar_banco.php';
@@ -105,11 +104,15 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p>Dificuldade: <?php echo $receita['dificuldade']; ?></p>
                     <p>Ingredientes: <?php echo $receita['ingredientes']; ?></p>
                     <p>Filtros: <?php echo $receita['categorias']; ?></p>
-                    <!-- Botão de exclusão -->
+                    <!-- Botões de exclusão e alteração -->
                     <?php if ($_SESSION['usuario_id'] == $receita['fk_id_usuario']) : ?>
                         <form method="post">
                             <input type="hidden" name="id_receita_excluir" value="<?php echo $receita['id_receita']; ?>">
                             <button type="submit" name="excluir_receita">Excluir Receita</button>
+                        </form>
+                        <form method="post" action="atualizar_receita.php">
+                            <input type="hidden" name="id_receita_alterar" value="<?php echo $receita['id_receita']; ?>">
+                            <button type="submit" name="alterar_receita">Alterar Receita</button>
                         </form>
                     <?php endif; ?>
                 </li>
