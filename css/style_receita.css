@@ -1,0 +1,108 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFB4D9;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+}
+
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="file"],
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+}
+
+button {
+    background-color: #DD5CA0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #DD5CA0;
+}
+
+/* Estilizando checkboxes */
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Adicionando espaço entre os checkbox */
+input[type="checkbox"] + label {
+    margin-right: 15px;
+}
+
+/* Estilos para o texto do botão de adicionar ingrediente */
+#container-ingredientes {
+    margin-bottom: 15px;
+}
+
+button[type="button"] {
+    background-color: #e07bb1;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button[type="button"]:hover {
+    background-color: #e07bb1;
+}
+
+/* Estilizando as divs de ingredientes */
+.ingrediente {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilizando o botão de enviar */
+input[type="submit"] {
+    background-color: #DD5CA0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #DD5CA0;
+}
+
+/* Adicionando espaço extra entre os elementos */
+br {
+    margin-bottom: 15px;
+}
