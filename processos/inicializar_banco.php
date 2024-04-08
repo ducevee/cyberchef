@@ -17,7 +17,6 @@ try {
     // Selecionar o banco de dados
     $pdo->exec("USE `$dbname`");
 
-    // Criar a tabela de usuários se não existir
     $sql = "CREATE TABLE IF NOT EXISTS usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(100) NOT NULL,
@@ -95,7 +94,10 @@ CREATE TABLE IF NOT EXISTS Receita (
         FOREIGN KEY (id_receita) REFERENCES Receita(id_receita),
         FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
     );";
-  $pdo->exec($sql);              
+
+    // Criar a tabela de usuários se não existir
+    $pdo->exec($sql);
+                
 } catch (PDOException $e) {
     die("Erro ao configurar banco de dados: " . $e->getMessage());
 }
