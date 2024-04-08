@@ -1,8 +1,8 @@
 <?php
-
+session_start();
 include_once '../processos/inicializar_banco.php';
 
-
+    
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $foto = $_POST['foto'];
@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $categorias = $_POST['filtros'];
     
     
-    $sql_receita = "INSERT INTO Receita (foto, titulo, qtde_porcoes, tipo_porcao, descricao, modo_preparo, dificuldade, tempo_preparo, data) 
-                    VALUES ('$foto', '$titulo', '$qtde_porcoes', '$tipo_porcao', '$descricao', '$modo_preparo', '$dificuldade','$tempo_preparo', NOW())";
+    $sql_receita = "INSERT INTO Receita (foto, titulo, qtde_porcoes, tipo_porcao, descricao, modo_preparo, dificuldade, tempo_preparo, data, fk_id_usuario;) 
+                    VALUES ('$foto', '$titulo', '$qtde_porcoes', '$tipo_porcao', '$descricao', '$modo_preparo', '$dificuldade','$tempo_preparo', NOW(), '$fk_id_usuario')";
     $pdo->query($sql_receita);
 
     

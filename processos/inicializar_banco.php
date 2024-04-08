@@ -29,9 +29,10 @@ try {
     
     CREATE TABLE IF NOT EXISTS Receita (
         id_receita INT AUTO_INCREMENT PRIMARY KEY,
-        tempo_preparo VARCHAR(20),
+        tempo_preparo VARCHAR(50),
         modo_preparo TEXT,
         qtde_porcoes INT,
+        tipo_porcao VARCHAR(25),
         foto VARCHAR(50),
         descricao VARCHAR(200),
         data DATETIME,
