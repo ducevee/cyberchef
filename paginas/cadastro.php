@@ -52,7 +52,7 @@
     </header>
 
     <main>
-      <img src="../css/img/batata_frita_animado.png" alt="logo" id="img-login">
+      <img src="../css/img/batata_frita_animado.png" alt="Batata frita animada" id="img-login">
 
       <form action="../processos/db/cadastrar_usuario.php" method="post" class="login-form" onsubmit="return validarSenha()">
         <h2>Criar uma nova Conta</h2>
@@ -72,7 +72,7 @@
             Já tem conta? <a href="login.php">Acesse aqui</a>
         </div>
     </form>
-    <img src="../css/img/waffle_animado.png" alt="logo" id="img-login">
+    <img src="../css/img/waffle_animado.png" alt="Waffle aniamado" id="img-login">
     </main>
   </body>
 </html>

@@ -44,7 +44,7 @@
             </nav>
         </header>
         <main>
-            <img src="../css/img/batata_frita_animado.png" alt="logo" id="img-login">
+            <img src="../css/img/batata_frita_animado.png" alt="Batata frita animada" id="img-login">
             <form action="../processos/verificar_login.php" method="post" class="login-form">
                 <h2>Login</h2>
                 <label for="email">Email:</label><br>
@@ -57,7 +57,7 @@
                     Não tem conta ainda? <a href="cadastro.php">Cadastre-se</a>
                 </div>
             </form>
-            <img src="../css/img/waffle_animado.png" alt="logo" id="img-login">
+            <img src="../css/img/waffle_animado.png" alt="Waffle aniamado" id="img-login">
         </main>
     </body>
 </html>
