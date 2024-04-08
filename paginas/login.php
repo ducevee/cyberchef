@@ -16,6 +16,11 @@
             <?php 
             unset($_SESSION['erro_login']); // Limpa a mensagem de erro após exibição
             endif; 
+
+            if(isset($_GET['mensagem'])) {
+                $mensagem = $_GET['mensagem'];
+                echo "<script>alert('" . htmlspecialchars($mensagem) . "');</script>";
+            }
         ?>
         <header>
             <nav class="navHeader">
