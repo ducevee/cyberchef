@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-    
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $foto = $_POST['foto'];
     $titulo = $_POST['titulo'];
