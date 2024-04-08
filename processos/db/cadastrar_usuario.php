@@ -20,6 +20,7 @@ try {
         $stmt= $pdo->prepare($sql);
         $stmt->execute([$nome, $email, $senha]);
         echo "Usuário cadastrado com sucesso!";
+        
     }
 } catch(PDOException $e) {
     echo "Erro ao cadastrar usuário: " . $e->getMessage();

@@ -214,6 +214,91 @@ input:focus {
     margin-bottom: 10px;
 }
 
+/* Home */
+.main-home{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 10rem;
+}
+
+.main-home h1{
+    color: var(--rosa-forte);
+}
+
+.btn-home{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.btn-home div{
+    background-color: var(--rosa-fraco);
+    color: white;
+    padding: 20px;
+    border-radius: 30px;
+    min-width: 12vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.receita-home{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.receita-home div{
+    background-color: var(--rosa-forte);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(33% - 2rem);
+    box-sizing: border-box;
+    text-align: center;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.receita-home div div:first-child{
+    background-color: var(--rosa-fraco);
+    padding: 15px 0 15px 0;
+    gap: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%
+}
+
+.receita-home div div img{
+    width: calc(100% - 30px);
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    display: block;
+}
+
+.receita-home div div:last-child{
+    background-color: gray;
+    border-radius: 0;
+    width: 100%;
+    border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+    .receita-home div {
+        width: 100%; 
+        margin: 0;
+    }
+}
+
+
 /* Estilos para a página inicial */
 table {
     width: 100%;
