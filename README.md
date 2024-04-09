@@ -29,8 +29,6 @@ Contribuições são sempre bem-vindas! Se você deseja contribuir com este proj
 
 ## Autores 👥
 - Eduardo Ceve - Desenvolvedor
-- Barbara  - Desenvolvedor
-- Eduardo Ceve - Desenvolvedor
-- Eduardo Ceve - Desenvolvedor
+
 
 Agradecemos aos contribuidores, professores e todos que oferecem suporte ao projeto!
