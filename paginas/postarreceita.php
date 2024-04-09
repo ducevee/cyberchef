@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poste suas receitas!</title>
+    <link rel="stylesheet" href="../css/style_receita.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
 
         <label for="titulo">Título:</label><br>
         <input type="text" id="titulo" name="titulo" required><br><br>
-        
+
         <label for="qtde_porcoes">Rendimento:</label><br>
 <input type="number" id="qtde_porcoes" name="qtde_porcoes" required>
 <select id="tipo_porcao" name="tipo_porcao">
@@ -22,6 +23,7 @@
     <option value="fatia">Fatia(s)</option>
     <option value="prato">Prato(s)</option>
     <option value="porcao">Porção(s)</option>
+    <option value="copo">Copo(s)</option> 
 </select>
 <br><br>
 
@@ -43,6 +45,8 @@
                 <option value="unidade">unidade(s)</option>
                 <option value="ml">ml</option>
                 <option value="gramas">g</option>
+                <option value="xicara">Xícara(s)</option>
+                <option value="colher">Colher(s)</option>
             </select>
             <span> de </span>
             <input type="text" name="ingredientes[]" placeholder="Nome do ingrediente" required>
@@ -64,6 +68,8 @@
                     <option value="unidade">unidade(s)</option>
                     <option value="ml">ml</option>
                     <option value="gramas">g</option>
+                    <option value="xicara">Xícara(s)</option>
+                    <option value="colher">Colher(s)</option>
                 </select>
                 <span> de </span>
                 <input type="text" name="ingredientes[]" placeholder="Nome do ingrediente" required>

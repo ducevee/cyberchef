@@ -47,15 +47,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <main class="main-home">
             <h1>BEM-VINDO AO CYBER CHEF!</h1>
             <section class="btn-home">
-                <div>
+                <a href="postarreceita.php">
                     POSTE
-                </div>
-                <div>
+                </a>
+                <a href="postarreceita.php">
                     COMPARTILHE
-                </div>
-                <div>
+                </a>
+                <a href="postarreceita.php">
                     AVALIE
-                </div>
+                </a>
             </section>
             <section class="receita-home">
                 <div>

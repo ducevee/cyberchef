@@ -232,7 +232,7 @@ input:focus {
     gap: 1em;
 }
 
-.btn-home div{
+.btn-home a{
     background-color: var(--rosa-fraco);
     color: white;
     padding: 20px;

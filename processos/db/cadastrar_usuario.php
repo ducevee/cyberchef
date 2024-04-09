@@ -14,13 +14,15 @@ try {
     if ($usuarioExistente) {
         // Se o usuário já existe, retorna uma mensagem de erro.
         echo "Erro: o usuário com este email já existe.";
+        header("Location: ../../paginas/cadastro.php?erro=1");
+
     } else {
         // Se o usuário não existe, insere o novo usuário no banco de dados.
         $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
         $stmt= $pdo->prepare($sql);
         $stmt->execute([$nome, $email, $senha]);
-        echo "Usuário cadastrado com sucesso!";
-        
+        $mensagem = "Usuário cadastrado com sucesso!";
+        header("Location: ../../paginas/login.php?mensagem=" . urlencode($mensagem));
     }
 } catch(PDOException $e) {
     echo "Erro ao cadastrar usuário: " . $e->getMessage();
