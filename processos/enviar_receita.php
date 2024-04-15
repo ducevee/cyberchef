@@ -18,41 +18,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $categorias = $_POST['filtros'];
     $idUsuario = $_SESSION['usuario_id'];
 
-    // Diretório para onde o arquivo será movido
     $target_dir = "../uploads/";
-    if (!file_exists($target_dir)) {    
-        mkdir($target_dir, 0777, true);
+    if (!file_exists($target_dir) && !mkdir($target_dir, 0777, true)) {
+        die('Erro: Não foi possível criar a pasta de uploads.');
     }
 
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-        $foto = $_FILES['foto'];
-        $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
-        $nomeArquivo = uniqid() . "." . $extensao;
-        $caminho = $target_dir . $nomeArquivo;
+    if (isset($_FILES['foto'])) {
+        if ($_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $foto = $_FILES['foto'];
+            $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+            $nomeArquivo = uniqid() . "." . $extensao;
+            $caminho = $target_dir . $nomeArquivo;
 
-        if (move_uploaded_file($foto['tmp_name'], $caminho)) {
-            // O arquivo foi movido para o diretório, inserir no banco de dados
-            try {
-                $pdo->beginTransaction();
-                $sql_receita = "INSERT INTO Receita (foto, titulo, qtde_porcoes, tipo_porcao, descricao, modo_preparo, dificuldade, tempo_preparo, fk_id_usuario, data) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
-                $stmt = $pdo->prepare($sql_receita);
-                $stmt->execute([$nomeArquivo, $titulo, $qtde_porcoes, $tipo_porcao, $descricao, $modo_preparo, $dificuldade, $tempo_preparo, $idUsuario]);
-                $pdo->commit();
-                
-                header("Location: ../paginas/listar_receitas.php?mensagem=" . urlencode("Receita cadastrada com sucesso!"));
-                exit;
-            } catch (PDOException $e) {
-                $pdo->rollBack();
-                echo "Erro ao cadastrar receita: " . $e->getMessage();
+            if (move_uploaded_file($foto['tmp_name'], $caminho)) {
+                try {
+                    $pdo->beginTransaction();
+                    $sql_receita = "INSERT INTO Receita (foto, titulo, qtde_porcoes, tipo_porcao, descricao, modo_preparo, dificuldade, tempo_preparo, fk_id_usuario, data) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+                    $stmt = $pdo->prepare($sql_receita);
+                    $stmt->execute([$nomeArquivo, $titulo, $qtde_porcoes, $tipo_porcao, $descricao, $modo_preparo, $dificuldade, $tempo_preparo, $idUsuario]);
+                    $pdo->commit();
+
+                    header("Location: ../processos/listar_receita.php?mensagem=" . urlencode("Receita cadastrada com sucesso!"));
+                    exit;
+                } catch (PDOException $e) {
+                    $pdo->rollBack();
+                    die('Erro ao cadastrar receita: ' . $e->getMessage());
+                }
+            } else {
+                die('Erro: Falha ao mover o arquivo.');
             }
         } else {
-            echo "Falha ao mover o arquivo.";
+            die('Erro no upload: ' . $_FILES['foto']['error']);
         }
     } else {
-        echo "Erro no upload da foto.";
+        die('Erro: Nenhum arquivo enviado.');
     }
 } else {
-    echo "Erro: formulário não submetido!";
+    die('Erro: Formulário não submetido!');
 }
 ?>
