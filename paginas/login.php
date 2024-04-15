@@ -40,7 +40,7 @@
                     <a class="linksHeader" href=".">EM ALTA</a>
                     </li>
                     <li>
-                    <a class="linksHeader" href=".">NOVIDADES</li></a>
+                    <a class="linksHeader" href="../processos/listar_receita.php">NOVIDADES</li></a>
                     </li>
                     <li>
                     <a class="linksHeader" href=".">CATEGORIA</a>

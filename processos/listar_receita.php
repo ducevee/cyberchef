@@ -111,21 +111,18 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <a class="linksHeader" href=".">CATEGORIA</a>
                     </li>
                 </ul>
-
-                    <b> 
-                        <?php
-                            if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
-                                echo "<div class='user'>Bem-vindo, <b>" & $_SESSION['usuario_nome'] & "!</b></div>";
-                            }
-                        ?>
-                    !
-                <a href="../processos/logout.php" alt="Sair" title="Sair">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#FFF" version="1.1" id="Capa_1" width="25px" height="25px" viewBox="0 0 492.5 492.5" xml:space="preserve">
-                        <g>
-	                        <path d="M184.646,0v21.72H99.704v433.358h31.403V53.123h53.539V492.5l208.15-37.422v-61.235V37.5L184.646,0z M222.938,263.129   c-6.997,0-12.67-7.381-12.67-16.486c0-9.104,5.673-16.485,12.67-16.485s12.67,7.381,12.67,16.485   C235.608,255.748,229.935,263.129,222.938,263.129z"/>
-                        </g>
-                    </svg>
-                </a>
+                <?php
+                    if (isset($_SESSION['usuario_id'])) {
+                        echo "<div class='user'>Bem-vindo, <b>" . htmlspecialchars($_SESSION['usuario_nome']) . "!</b></div>";
+                        echo  "<a href='../processos/logout.php' alt='Sair' title='Sair'>
+                                    <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' fill='#FFF' version='1.1' id='Capa_1' width='25px' height='25px' viewBox='0 0 492.5 492.5' xml:space='preserve'>
+                                        <g>
+                                            <path d='M184.646,0v21.72H99.704v433.358h31.403V53.123h53.539V492.5l208.15-37.422v-61.235V37.5L184.646,0z M222.938,263.129   c-6.997,0-12.67-7.381-12.67-16.486c0-9.104,5.673-16.485,12.67-16.485s12.67,7.381,12.67,16.485   C235.608,255.748,229.935,263.129,222.938,263.129z'/>
+                                        </g>
+                                    </svg>
+                                </a>";
+                    }
+                ?>
             </nav>
         </header>
     <main>
@@ -145,7 +142,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <p>Ingredientes: <?php echo $receita['ingredientes']; ?></p>
                         <p>Filtros: <?php echo $receita['categorias']; ?></p>
                         <!-- Botões de exclusão e alteração -->
-                        <?php if ($_SESSION['usuario_id'] == $receita['fk_id_usuario']) : ?>
+                        <?php if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $receita['fk_id_usuario']) : ?>
                             <form method="post">
                                 <input type="hidden" name="id_receita_excluir" value="<?php echo $receita['id_receita']; ?>">
                                 <button type="submit" name="excluir_receita">Excluir Receita</button>
