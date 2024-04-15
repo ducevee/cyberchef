@@ -96,7 +96,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <li>
                     <h3><?php echo $receita['titulo']; ?></h3>
                     <p>Postado por: <?php echo $receita['nome_usuario']; ?></p>
-                    <img src="<?php echo $receita['foto']; ?>" alt="<?php echo $receita['titulo']; ?>">
+                    <img src="../uploads/<?php echo htmlspecialchars($receita['foto']); ?>" alt="Foto da receita de <?php echo htmlspecialchars($receita['titulo']); ?>">
                     <p>Rendimento: <?php echo $receita['qtde_porcoes'] . ' ' . $receita['tipo_porcao']; ?></p>
                     <p>Tempo de preparo: <?php echo $receita['tempo_preparo']; ?></p>
                     <p>Descrição: <?php echo $receita['descricao']; ?></p>
