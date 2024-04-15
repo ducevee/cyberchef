@@ -1,3 +1,14 @@
+<?php
+include_once '../processos/inicializar_banco.php';
+$id_receita = isset($_GET['id_receita']) ? $_GET['id_receita'] : null;
+$receita = null;
+
+if ($id_receita) {
+    $stmt = $pdo->prepare("SELECT * FROM Receita WHERE id_receita = ?");
+    $stmt->execute([$id_receita]);
+    $receita = $stmt->fetch();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,24 +19,28 @@
 </head>
 <body>
 
-    <h1>Poste suas receitas</h1>
-    <form action="../processos/enviar_receita.php" method="POST">
-    <label for="foto">Foto da Receita:</label><br>
+    <h1><?= $id_receita ? 'Editar sua receita' : 'Poste suas receitas' ?></h1>
+    <form action="../processos/enviar_receita.php" method="POST" enctype="multipart/form-data">
+        <?php if ($id_receita): ?>
+            <input type="hidden" name="id_receita" value="<?= $receita['id_receita'] ?>">
+        <?php endif; ?>
+
+        <label for="foto">Foto da Receita:</label><br>
         <input type="file" id="foto" name="foto" accept="image/*"><br><br>
 
         <label for="titulo">Título:</label><br>
-        <input type="text" id="titulo" name="titulo" required><br><br>
+        <input type="text" id="titulo" name="titulo" required value="<?= htmlspecialchars($receita['titulo'] ?? ''); ?>"><br><br>
 
         <label for="qtde_porcoes">Rendimento:</label><br>
-<input type="number" id="qtde_porcoes" name="qtde_porcoes" required>
-<select id="tipo_porcao" name="tipo_porcao">
-    <option value="vazio"></option>
-    <option value="fatia">Fatia(s)</option>
-    <option value="prato">Prato(s)</option>
-    <option value="porcao">Porção(s)</option>
-    <option value="copo">Copo(s)</option> 
-</select>
-<br><br>
+        <input type="number" id="qtde_porcoes" name="qtde_porcoes" required>
+        <select id="tipo_porcao" name="tipo_porcao">
+            <option value="vazio"></option>
+            <option value="fatia">Fatia(s)</option>
+            <option value="prato">Prato(s)</option>
+            <option value="porcao">Porção(s)</option>
+            <option value="copo">Copo(s)</option> 
+        </select>
+        <br><br>
 
         <label for="descricao">Descrição:</label><br>
         <textarea id="descricao" name="descricao" rows="5" cols="45" required></textarea><br><br>
