@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_receita'])) {
         if ($exclusao_sucesso) {
             echo "<script>alert('Receita excluída com sucesso!');</script>";
             // Recarregar a página após a exclusão
-            echo "<script>window.location.href = 'nome_da_pagina.php';</script>";
+            echo "<script>window.location.href = '../processos/listar_receita.php';</script>";
             exit;
         } else {
             echo "<script>alert('Erro ao excluir a receita. Por favor, tente novamente.');</script>";
