@@ -1,38 +1,44 @@
 <?php
 session_start();
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-if ($_SESSION['is_admin'] != 1 || !isset($_SESSION['loggedin'])) {
-    header('Location: ../../paginas/home.php');
-    exit;
-}
-
 require_once '../inicializar_banco.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['id'], $_POST['nome'], $_POST['email']) && !empty($_POST['id']) && !empty($_POST['nome']) && !empty($_POST['email'])) {
-        $userId = $_POST['id'];
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
+    $userId = $_POST['id'];
+    $nome = trim($_POST['nome']);
+    $email = trim($_POST['email']);
 
-        try {
-            $sql = "UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['nome' => $nome, 'email' => $email, 'id' => $userId]);
-
-            // Redirecionar para a home do admin após a atualização
-            header('Location: ../../paginas/home_admin.php');
+    try {
+        // Verificar se existe outro usuário com o mesmo email
+        $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = :email AND id != :id");
+        $stmt->execute(['email' => $email, 'id' => $userId]);
+        if ($stmt->fetch()) {
+            header('Location: editar_usuario.php?id=' . $userId . '&mensagem=' . urlencode('Erro: O e-mail já está cadastrado para outro usuário.'));
             exit;
-        } catch (PDOException $e) {
-            exit("Erro ao atualizar o usuário: " . $e->getMessage());
         }
-    } else {
-        exit('Dados incompletos.');
+
+        // Verificar se existe outro usuário com o mesmo nome
+        $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE nome = :nome AND id != :id");
+        $stmt->execute(['nome' => $nome, 'id' => $userId]);
+        if ($stmt->fetch()) {
+            header('Location: editar_usuario.php?id=' . $userId . '&mensagem=' . urlencode('Erro: O nome já está cadastrado para outro usuário.'));
+            exit;
+        }
+
+        // Se não houver conflito de nome ou email, atualize o usuário
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['nome' => $nome, 'email' => $email, 'id' => $userId]);
+
+        // Redirecionamento para a página de configurações se a atualização for bem sucedida
+        header('Location: ../../paginas/home_admin.php');
+        exit;
+    } catch (PDOException $e) {
+        header('Location: editar_usuario.php?id=' . $userId . '&mensagem=' . urlencode('Erro ao atualizar o usuário: ' . $e->getMessage()));
+        exit;
     }
 } else {
-    // Se não for POST, redirecionar de volta para a página de edição
-    header('Location: editar_usuario.php?id=' . $_POST['id']);
+    // Se a requisição não for POST, também redireciona para a página de edição com mensagem de erro
+    header('Location: editar_usuario.php?id=' . $userId . '&mensagem=' . urlencode('Requisição inválida.'));
     exit;
 }
 ?>
