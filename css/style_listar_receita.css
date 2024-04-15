@@ -134,106 +134,70 @@ header{
     color: #fff;
 }
 
-body {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
+
+main {
+    background: #f4f4f4;
+    color: #333;
 }
 
-main{
-    display: flex;
-    flex-direction: row;
-    justify-content:space-around;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+main ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-#img-login{
-    width: 20vw;
-}
-
-.main-home{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-bottom: 10rem;
-}
-
-.main-home h1{
-    color: var(--rosa-forte);
-}
-
-.btn-home{
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-}
-
-.btn-home a{
-    background-color: var(--rosa-fraco);
-    color: white;
+main li {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px;
     padding: 20px;
-    border-radius: 30px;
-    min-width: 12vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 8px;
 }
 
-.receita-home{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 1rem;
-}
-
-.receita-home div{
-    background-color: var(--rosa-forte);
-    color: white;
-    padding: 15px;
-    border-radius: 12px;
-    gap: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: calc(33% - 2rem);
-    box-sizing: border-box;
-    text-align: center;
-    max-width: 100%;
-    cursor: pointer;
-}
-
-.receita-home div div:first-child{
-    background-color: var(--rosa-fraco);
-    padding: 15px 0 15px 0;
-    gap: 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    width: 100%
-}
-
-.receita-home div div img{
-    width: calc(100% - 30px);
+main img {
     max-width: 100%;
     height: auto;
-    border-radius: 15px;
     display: block;
+    margin: 0 auto 10px;
 }
 
-.receita-home div div:last-child{
-    background-color: gray;
-    border-radius: 0;
-    width: 100%;
-    border-radius: 15px;
-}
+/* Responsividade */
+@media (min-width: 600px) {
+    main ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-gap: 20px;
+        padding: 20px;
+    }
 
-@media (max-width: 768px) {
-    .receita-home div {
-        width: 100%; 
-        margin: 0;
+    main li {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    main form {
+        margin-top: 10px;
     }
 }
+
+/* Botões */
+main button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+    background-color: #28a745; /* verde */
+    color: white;
+}
+
+main button:hover {
+    opacity: 0.9;
+}
+
+/* Botão excluir com cor diferente */
+[name="excluir_receita"] {
+    background-color: #dc3545; /* vermelho */
+}
+

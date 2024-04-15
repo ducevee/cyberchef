@@ -42,6 +42,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <a class="linksHeader" href=".">CATEGORIA</a>
                     </li>
                 </ul>
+                <div class="user">Bem-vindo, <b> <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?><b>!</div>
                 <a href="../processos/logout.php" alt="Sair" title="Sair">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#FFF" version="1.1" id="Capa_1" width="25px" height="25px" viewBox="0 0 492.5 492.5" xml:space="preserve">
                         <g>
@@ -96,7 +97,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     Nome
                 </div>
             </section>
-             <a href="../processos/logout.php" class="logout-btn">Sair</a> 
         </main>
     </body>
 </html>

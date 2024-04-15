@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+
 include_once '../processos/inicializar_banco.php';
 $id_receita = isset($_GET['id_receita']) ? $_GET['id_receita'] : null;
 $receita = null;
