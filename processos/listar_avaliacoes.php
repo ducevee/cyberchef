@@ -46,7 +46,11 @@ if (!isset($_SESSION))
                         echo '<i class="estrela-vazia fa-solid fa-star"></i>';
                     }
                 }
-                echo "<p>Comentário: $mensagem</p>";
+                if ($mensagem != NULL){
+                    echo "<p>Comentário: $mensagem</p>";}
+                    else{
+                        echo "<br><br>";
+                    }
                 if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
                     echo "<a href='../processos/excluir_avaliacao.php?id_avaliacao=$id_avaliacao'>Excluir avaliação</a>";
                 }
