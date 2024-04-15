@@ -24,8 +24,8 @@
         ?>
         <header>
             <nav class="navHeader">
-                <a href="index.html" id="link-logo" title="Página inicial">
-                <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
+                <a href="<?php echo ($_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
+                    <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
                 </a>
                 <div class="search-container">
                 <input type="search" class="search-input" placeholder="Busque por uma receita, Chef ou Categoria.">
@@ -40,7 +40,7 @@
                     <a class="linksHeader" href=".">EM ALTA</a>
                     </li>
                     <li>
-                    <a class="linksHeader" href="../processos/listar_receita.php">NOVIDADES</li></a>
+                    <a class="linksHeader" href="../paginas/listar_receita.php">NOVIDADES</li></a>
                     </li>
                     <li>
                     <a class="linksHeader" href=".">CATEGORIA</a>
