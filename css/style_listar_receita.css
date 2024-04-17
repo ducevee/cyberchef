@@ -134,9 +134,11 @@ header{
     color: #fff;
 }
 
+html {
+    background: #f4f4f4;
+}
 
 main {
-    background: #f4f4f4;
     color: #333;
 }
 

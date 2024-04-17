@@ -20,8 +20,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <body>
         <header>
             <nav class="navHeader">
-                <a href="index.html" id="link-logo" title="Página inicial">
-                <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
+                <a href="<?php echo ($_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
+                    <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
                 </a>
                 <div class="search-container">
                 <input type="search" class="search-input" placeholder="Busque por uma receita, Chef ou Categoria.">
@@ -36,7 +36,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <a class="linksHeader" href=".">EM ALTA</a>
                     </li>
                     <li>
-                    <a class="linksHeader" href="../processos/listar_receita.php">NOVIDADES</li></a>
+                    <a class="linksHeader" href="../paginas/listar_receita.php">NOVIDADES</li></a>
                     </li>
                     <li>
                     <a class="linksHeader" href=".">CATEGORIA</a>
@@ -55,13 +55,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <main class="main-home">
             <h1>BEM-VINDO AO CYBER CHEF!</h1>
             <section class="btn-home">
-                <a href="postarreceita.php">
+                <a href="postar_receita.php">
                     POSTE
                 </a>
-                <a href="postarreceita.php">
+                <a href="postar_receita.php">
                     COMPARTILHE
                 </a>
-                <a href="postarreceita.php">
+                <a href="postar_receita.php">
                     AVALIE
                 </a>
             </section>
