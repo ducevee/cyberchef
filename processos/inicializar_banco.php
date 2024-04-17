@@ -1,7 +1,7 @@
 <?php
 $host = '127.0.0.1';
 $dbname = 'cyberchef';
-$username = 'cyberchef';
+$username = 'edu';
 $password = 'Senha123';
 
 try {

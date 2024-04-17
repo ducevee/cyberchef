@@ -1,4 +1,4 @@
-/* Reset básico para remover margens e padding padrão */
+Reset básico para remover margens e padding padrão
 * {
     margin: 0;
     padding: 0;
@@ -192,3 +192,4 @@ a:hover {
 .home-page table {
     margin-top: 0; /* Remova a margem se houver */
 }
+

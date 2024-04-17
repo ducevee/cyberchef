@@ -237,3 +237,81 @@ main{
         margin: 0;
     }
 }
+
+/* Estilo da tabela para gerenciamento de usuários */
+
+/* Utilize variáveis para cores comuns */
+:root {
+    --rosa-fraco: #FFB4D9;
+    --rosa-medio: #e07bb1;
+    --rosa-forte: #DD5CA0;
+    --texto-claro: #fff;
+    --fundo-claro: #f4f4f4;
+    --borda-suave: #ccc;
+    --fundo-tabela: #f2f2f2;
+    --botao-editar: #f0ad4e;
+    --botao-excluir: #d9534f;
+}
+
+/* Estilos para a tabela */
+.admin-home-page table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--texto-claro);
+    margin: 2em 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.admin-home-page th, .admin-home-page td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid var(--borda-suave);
+}
+
+.admin-home-page th {
+    background-color: var(--rosa-forte);
+    color: var(--texto-claro);
+}
+
+.admin-home-page tr:nth-child(even) {
+    background-color: var(--fundo-tabela);
+}
+
+/* Estilo dos botões na tabela */
+.admin-home-page .editar-btn, .admin-home-page .excluir-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none; /* Remover sublinhado de links */
+}
+
+.admin-home-page .editar-btn {
+    background-color: var(--botao-editar);
+    color: var(--texto-claro);
+    margin-right: 8px; /* Espaçamento entre os botões */
+}
+
+.admin-home-page .editar-btn:hover {
+    background-color: #e6951d ;
+}
+
+.admin-home-page .excluir-btn {
+    background-color: var(--botao-excluir);
+    color: var(--texto-claro);
+}   
+
+.admin-home-page .excluir-btn:hover {
+    background-color: #c12e2a ;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .admin-home-page table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
