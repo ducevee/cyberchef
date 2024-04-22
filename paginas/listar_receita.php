@@ -94,7 +94,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <header>
             <nav class="navHeader">
-                <a href="<?php echo ($_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
+                <a href="<?php echo (isset($_SESSION['usuario_id']) && $_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
                     <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
                 </a>
                 <div class="search-container">
