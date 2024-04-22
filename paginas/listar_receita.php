@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_receita'])) {
     }
 }
 
-// Consulta SQL para obter todas as receitas com seus ingredientes, filtros e usuário associados
+// Consulta SQL para obter todas as receitas com seus ingredientes, categorias e usuário associados
 $sql = "SELECT r.*, 
                 GROUP_CONCAT(DISTINCT i.ingrediente SEPARATOR ', ') AS ingredientes, 
                 GROUP_CONCAT(DISTINCT c.categoria SEPARATOR ', ') AS categorias,
@@ -145,7 +145,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <p>Modo de preparo: <?php echo $receita['modo_preparo']; ?></p>
                         <p>Dificuldade: <?php echo $receita['dificuldade']; ?></p>
                         <p>Ingredientes: <?php echo $receita['ingredientes']; ?></p>
-                        <p>Filtros: <?php echo $receita['categorias']; ?></p>
+                        <p>Categorias: <?php echo $receita['categorias']; ?></p>
                         <!-- Botões de exclusão e alteração -->
                         <?php if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $receita['fk_id_usuario']) : ?>
                             <form method="post">

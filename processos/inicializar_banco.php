@@ -1,7 +1,7 @@
 <?php
 $host = '127.0.0.1';
 $dbname = 'cyberchef';
-$username = 'edu';
+$username = 'cyberchef';
 $password = 'Senha123';
 
 try {
@@ -26,7 +26,7 @@ try {
         is_admin TINYINT(1) NOT NULL DEFAULT 0
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     
-CREATE TABLE IF NOT EXISTS Receita (
+    CREATE TABLE IF NOT EXISTS Receita (
         id_receita INT AUTO_INCREMENT PRIMARY KEY,
         tempo_preparo VARCHAR(50),
         modo_preparo TEXT,

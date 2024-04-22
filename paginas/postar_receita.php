@@ -8,17 +8,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 include_once '../processos/inicializar_banco.php';
 $id_receita = isset($_GET['id_receita']) ? $_GET['id_receita'] : null;
 $receita = null;
+$ingredientesReceita = [];
+$categoriasReceita = [];
 
 if ($id_receita) {
     $stmt = $pdo->prepare("SELECT * FROM Receita WHERE id_receita = ?");
     $stmt->execute([$id_receita]);
     $receita = $stmt->fetch();
+    $stmt = $pdo->prepare("SELECT I.quantidade, I.unidade, I.ingrediente 
+                       FROM Receita_Ingrediente RI 
+                       JOIN Ingredientes I ON RI.id_ingrediente = I.id_ingrediente 
+                       WHERE RI.id_receita = ?");
+    $stmt->execute([$id_receita]);
+    $ingredientesReceita = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT C.categoria FROM Receita_Categoria RC JOIN Categoria C ON RC.id_categoria = C.id_categoria WHERE RC.id_receita = ?");
+    $stmt->execute([$id_receita]);
+    $categoriasReceita = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 
     if ($_SESSION['usuario_id'] != $receita['fk_id_usuario']) {
         // Redireciona para a página de criação de receita se não for o dono
         header('Location: postar_receita.php');
         exit;
     }
+}
+
+if(isset($_GET['mensagem'])) {
+    $mensagem = $_GET['mensagem'];
+    echo "<script>alert('" . htmlspecialchars($mensagem) . "');</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -64,19 +81,19 @@ if ($id_receita) {
 
         <div id="container-ingredientes">
             <label>Ingredientes:</label><br>
-            <div class="ingrediente">
-                <input type="number" name="quantidades[]" required>
-                <select name="unidades[]" required>
-                    <option value="">Selecione a unidade</option>
-                    <option value="unidade">unidade(s)</option>
-                    <option value="ml">ml</option>
-                    <option value="gramas">g</option>
-                    <option value="xicara">Xícara(s)</option>
-                    <option value="colher">Colher(s)</option>
-                </select>
-                <span> de </span>
-                <input type="text" name="ingredientes[]" placeholder="Nome do ingrediente" required>
-            </div>
+            <?php foreach ($ingredientesReceita as $ingrediente): ?>
+                <div class="ingrediente">
+                    <input type="number" name="quantidades[]" value="<?= htmlspecialchars($ingrediente['quantidade']); ?>" required>
+                    <select name="unidades[]" required>
+                        <!-- Preencha com as opções, selecionando a unidade correta -->
+                        <option value="unidade" <?= $ingrediente['unidade'] == 'unidade' ? 'selected' : ''; ?>>unidade(s)</option>
+                        <!-- Repita para outras unidades -->
+                    </select>
+                    <span> de </span>
+                    <input type="text" name="ingredientes[]" value="<?= htmlspecialchars($ingrediente['ingrediente']); ?>" placeholder="Nome do ingrediente" required>
+                </div>
+            <?php endforeach; ?>
+            <!-- Restante do formulário -->
         </div>
         <button type="button" onclick="adicionarIngrediente()">+</button><br><br>
 
@@ -90,20 +107,21 @@ if ($id_receita) {
             <option value="dificil" <?= (isset($receita['dificuldade']) && $receita['dificuldade'] == 'dificil') ? 'selected' : ''; ?>>Difícil</option>
         </select><br><br>
 
-        <label for="categoria">Filtros:</label><br>
-        <input type="checkbox" id="Salgado" name="filtros[]" value="Salgado" <?= strpos($receita['categorias'] ?? '', 'Salgado') !== false ? 'checked' : ''; ?>> Salgado<br>
-        <input type="checkbox" id="Doce" name="filtros[]" value="Doce" <?= strpos($receita['categorias'] ?? '', 'Doce') !== false ? 'checked' : ''; ?>> Doce<br>
-        <input type="checkbox" id="Almoço" name="filtros[]" value="Almoço" <?= strpos($receita['categorias'] ?? '', 'Almoço') !== false ? 'checked' : ''; ?>> Almoço<br>
-        <input type="checkbox" id="Massa" name="filtros[]" value="Massa" <?= strpos($receita['categorias'] ?? '', 'Massa') !== false ? 'checked' : ''; ?>> Massa<br>
-        <input type="checkbox" id="Cafe_da_manha" name="filtros[]" value="Café da manhã" <?= strpos($receita['categorias'] ?? '', 'Café da manhã') !== false ? 'checked' : ''; ?>> Café da manhã<br>
-        <input type="checkbox" id="Carnes" name="filtros[]" value="Carnes" <?= strpos($receita['categorias'] ?? '', 'Carnes') !== false ? 'checked' : ''; ?>> Carnes<br>
-        <input type="checkbox" id="Janta" name="filtros[]" value="Janta" <?= strpos($receita['categorias'] ?? '', 'Janta') !== false ? 'checked' : ''; ?>> Jantar<br>
-        <input type="checkbox" id="Frutos_do_mar" name="filtros[]" value="Frutos do mar" <?= strpos($receita['categorias'] ?? '', 'Frutos do mar') !== false ? 'checked' : ''; ?>> Frutos do mar<br>
-        <input type="checkbox" id="Vegetariano" name="filtros[]" value="Vegetariano" <?= strpos($receita['categorias'] ?? '', 'Vegetariano') !== false ? 'checked' : ''; ?>> Vegetariano<br>
-        <input type="checkbox" id="Bebidas" name="filtros[]" value="Bebidas" <?= strpos($receita['categorias'] ?? '', 'Bebidas') !== false ? 'checked' : ''; ?>> Bebidas<br>
-        <input type="checkbox" id="Vegano" name="filtros[]" value="Vegano" <?= strpos($receita['categorias'] ?? '', 'Vegano') !== false ? 'checked' : ''; ?>> Vegano<br>
-        <input type="checkbox" id="Sobremesa" name="filtros[]" value="Sobremesa" <?= strpos($receita['categorias'] ?? '', 'Sobremesa') !== false ? 'checked' : ''; ?>> Sobremesa<br>
-        <input type="checkbox" id="Ensopados" name="filtros[]" value="Ensopados" <?= strpos($receita['categorias'] ?? '', 'Ensopados') !== false ? 'checked' : ''; ?>> Ensopados<br>
+        <label for="categoria">Categorias:</label><br>
+        <input type="checkbox" id="Salgado" name="categorias[]" value="Salgado" <?= in_array('Salgado', $categoriasReceita) ? 'checked' : ''; ?>> Salgado<br>
+        <input type="checkbox" id="Doce" name="categorias[]" value="Doce" <?= in_array('Doce', $categoriasReceita) ? 'checked' : ''; ?>> Doce<br>
+        <input type="checkbox" id="Almoço" name="categorias[]" value="Almoço" <?= in_array('Almoço', $categoriasReceita) ? 'checked' : ''; ?>> Almoço<br>
+        <input type="checkbox" id="Massa" name="categorias[]" value="Massa" <?= in_array('Massa', $categoriasReceita) ? 'checked' : ''; ?>> Massa<br>
+        <input type="checkbox" id="Cafe_da_manha" name="categorias[]" value="Café da manhã" <?= in_array('Café da manhã', $categoriasReceita) ? 'checked' : ''; ?>> Café da manhã<br>
+        <input type="checkbox" id="Carnes" name="categorias[]" value="Carnes" <?= in_array('Carnes', $categoriasReceita) ? 'checked' : ''; ?>> Carnes<br>
+        <input type="checkbox" id="Janta" name="categorias[]" value="Jantar" <?= in_array('Janta', $categoriasReceita) ? 'checked' : ''; ?>> Jantar<br>
+        <input type="checkbox" id="Frutos_do_mar" name="categorias[]" value="Frutos do mar" <?= in_array('Frutos do mar', $categoriasReceita) ? 'checked' : ''; ?>> Frutos do mar<br>
+        <input type="checkbox" id="Vegetariano" name="categorias[]" value="Vegetariano" <?= in_array('Vegetariano', $categoriasReceita) ? 'checked' : ''; ?>> Vegetariano<br>
+        <input type="checkbox" id="Bebidas" name="categorias[]" value="Bebidas" <?= in_array('Bebidas', $categoriasReceita) ? 'checked' : ''; ?>> Bebidas<br>
+        <input type="checkbox" id="Vegano" name="categorias[]" value="Vegano" <?= in_array('Vegano', $categoriasReceita) ? 'checked' : ''; ?>> Vegano<br>
+        <input type="checkbox" id="Sobremesa" name="categorias[]" value="Sobremesa" <?= in_array('Sobremesa', $categoriasReceita) ? 'checked' : ''; ?>> Sobremesa<br>
+        <input type="checkbox" id="Ensopados" name="categorias[]" value="Ensopados" <?= in_array('Ensopados', $categoriasReceita) ? 'checked' : ''; ?>> Ensopados<br>
+        <br>
         <input type="submit" value="Enviar">
     </form>
 

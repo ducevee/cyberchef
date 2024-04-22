@@ -34,11 +34,17 @@ $stmt = $pdo->query("SELECT id, nome, email, data_criacao FROM usuarios");
                 <a class="linksHeader" href="gerenciar_receitas.php">GERENCIAR RECEITAS</a>
                 </li>
                 <li>
-                <a class="linksHeader" href="gerenciar_usuarios.php">GERENCIAR USUÁRIOS</a>
+                <a class="linksHeader" href="home_admin.php">GERENCIAR USUÁRIOS</a>
                 </li>
             </ul>
             <div class="user">Bem-vindo, Admin!</div>
-            <a href="../processos/logout.php" alt="Sair" title="Sair" class="logout-btn">Sair</a>
+            <a href="../processos/logout.php" alt="Sair" title="Sair">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#FFF" version="1.1" id="Capa_1" width="25px" height="25px" viewBox="0 0 492.5 492.5" xml:space="preserve">
+                    <g>
+                        <path d="M184.646,0v21.72H99.704v433.358h31.403V53.123h53.539V492.5l208.15-37.422v-61.235V37.5L184.646,0z M222.938,263.129   c-6.997,0-12.67-7.381-12.67-16.486c0-9.104,5.673-16.485,12.67-16.485s12.67,7.381,12.67,16.485   C235.608,255.748,229.935,263.129,222.938,263.129z"/>
+                    </g>
+                </svg>
+            </a>
         </nav>
     </header>
     <main class="main-home">
