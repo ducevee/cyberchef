@@ -15,8 +15,6 @@ Para configurar o projeto em seu ambiente local, siga os passos abaixo:
 3. Configure o ambiente de desenvolvimento e instale as dependências.
 4. Inicie o servidor de desenvolvimento e acesse o projeto em seu navegador.
 
-
-
 ## Contribuindo 🤝
 Contribuições são sempre bem-vindas! Se você deseja contribuir com este projeto, por favor:
 
@@ -26,9 +24,11 @@ Contribuições são sempre bem-vindas! Se você deseja contribuir com este proj
 4. Envie sua branch (`git push origin feature/novaFuncionalidade`).
 5. Crie um novo Pull Request.
 
-
 ## Autores 👥
 - Eduardo Ceve - Desenvolvedor
-- Bárbara Tippa - Desenvolvedor
+- Bárbara Tippa - Desenvolvedora
+- Evelyn Costa - Desenvolvedora
+- João Victor - Desenvolvedor
+- Mateus Schneider - Desenvolvedor
 
 Agradecemos aos contribuidores, professores e todos que oferecem suporte ao projeto!
