@@ -54,10 +54,8 @@ if(isset($_GET['mensagem'])) {
         <?php endif; ?>
 
         <label for="foto">Foto da Receita:</label><br>
-        <input type="file" id="foto" name="foto" accept="image/*"><br>
-        <?php if ($id_receita && $receita['foto']): ?>
-            <img src="../uploads/<?= htmlspecialchars($receita['foto']); ?>" alt="Foto atual" height="100"><br>
-        <?php endif; ?><br>
+        <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage();"><br>
+        <img id="preview" src="<?php echo ($id_receita && $receita['foto']) ? "../uploads/" . htmlspecialchars($receita['foto']) : ''; ?>" alt="Foto da receita" style="height: 100px; display: <?php echo ($id_receita && $receita['foto']) ? 'block' : 'none'; ?>;"><br>
 
         <label for="titulo">Título:</label><br>
         <input type="text" id="titulo" name="titulo" required value="<?= htmlspecialchars($receita['titulo'] ?? ''); ?>"><br><br>
@@ -144,6 +142,24 @@ if(isset($_GET['mensagem'])) {
                 <input type="text" name="ingredientes[]" placeholder="Nome do ingrediente" required>
             `;
             container.appendChild(ingredienteDiv);
+        };
+
+        function previewImage() {
+            var file = document.getElementById("foto").files[0];
+            var preview = document.getElementById("preview");
+            var reader = new FileReader();
+            
+            reader.onloadend = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+                preview.style.display = 'none';
+            }
         }
     </script>
 </body>
