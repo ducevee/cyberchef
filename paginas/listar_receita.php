@@ -136,24 +136,25 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <ul>
                 <?php foreach ($receitas as $receita) : ?>
                     <li>
-                        <h3><?php echo $receita['titulo']; ?></h3>
-                        <p>Postado por: <?php echo $receita['nome_usuario']; ?></p>
-                        <img src="../uploads/<?php echo htmlspecialchars($receita['foto']); ?>" alt="Foto da receita de <?php echo htmlspecialchars($receita['titulo']); ?>">
-                        <p>Rendimento: <?php echo $receita['qtde_porcoes'] . ' ' . $receita['tipo_porcao']; ?></p>
-                        <p>Tempo de preparo: <?php echo $receita['tempo_preparo']; ?></p>
-                        <p>Descrição: <?php echo $receita['descricao']; ?></p>
-                        <p>Modo de preparo: <?php echo $receita['modo_preparo']; ?></p>
-                        <p>Dificuldade: <?php echo $receita['dificuldade']; ?></p>
-                        <p>Ingredientes: <?php echo $receita['ingredientes']; ?></p>
-                        <p>Categorias: <?php echo $receita['categorias']; ?></p>
-                        <!-- Botões de exclusão e alteração -->
+                        <!-- Link para a página de visualização da receita -->
+                        <h3><a href="visualizar_receita.php?id=<?= $receita['id_receita']; ?>"><?= htmlspecialchars($receita['titulo']); ?></a></h3>
+                        <p>Postado por: <?= htmlspecialchars($receita['nome_usuario']); ?></p>
+                        <img src="../uploads/<?= htmlspecialchars($receita['foto']); ?>" alt="Foto da receita de <?= htmlspecialchars($receita['titulo']); ?>" style="width:100px; height:auto;">
+                        <p>Rendimento: <?= $receita['qtde_porcoes'] . ' ' . $receita['tipo_porcao']; ?></p>
+                        <p>Tempo de preparo: <?= $receita['tempo_preparo']; ?></p>
+                        <p>Descrição: <?= $receita['descricao']; ?></p>
+                        <p>Modo de preparo: <?= $receita['modo_preparo']; ?></p>
+                        <p>Dificuldade: <?= $receita['dificuldade']; ?></p>
+                        <p>Ingredientes: <?= $receita['ingredientes']; ?></p>
+                        <p>Categorias: <?= $receita['categorias']; ?></p>
+                        <!-- Botões de exclusão e alteração, mostrados apenas se o usuário está logado e é o autor da receita -->
                         <?php if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $receita['fk_id_usuario']) : ?>
                             <form method="post">
-                                <input type="hidden" name="id_receita_excluir" value="<?php echo $receita['id_receita']; ?>">
+                                <input type="hidden" name="id_receita_excluir" value="<?= $receita['id_receita']; ?>">
                                 <button type="submit" name="excluir_receita">Excluir Receita</button>
                             </form>
                             <form method="get" action="postar_receita.php">
-                                <input type="hidden" name="id_receita" value="<?php echo htmlspecialchars($receita['id_receita']); ?>">
+                                <input type="hidden" name="id_receita" value="<?= htmlspecialchars($receita['id_receita']); ?>">
                                 <button type="submit">Alterar Receita</button>
                             </form>
                         <?php endif; ?>
