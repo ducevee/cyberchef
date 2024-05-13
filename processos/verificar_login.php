@@ -25,7 +25,8 @@ try {
         }
         
     } else {
-        echo "E-mail ou senha inválidos!";
+        $mensagem = "E-mail ou senha inválidos!";
+        header("Location: ../paginas/login.php?mensagem=" . urlencode($mensagem));
     }
 } catch(PDOException $e) {
     echo "Erro ao realizar login: " . $e->getMessage();

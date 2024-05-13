@@ -1,4 +1,4 @@
-/* Reset básico para remover margens e padding padrão */
+Reset básico para remover margens e padding padrão
 * {
     margin: 0;
     padding: 0;
@@ -31,7 +31,7 @@ h2 {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -43,7 +43,7 @@ input[type="submit"] {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: #e100ff;
     color: white;
     cursor: pointer;
 }
@@ -89,7 +89,7 @@ th, td {
 }
 
 th {
-    background-color: #007bff;
+    background-color: #ea00ff;
     color: white;
 }
 
@@ -192,3 +192,4 @@ a:hover {
 .home-page table {
     margin-top: 0; /* Remova a margem se houver */
 }
+

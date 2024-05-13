@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';
+$host = '127.0.0.1';
 $dbname = 'cyberchef';
-$username = 'root';
-$password = 'PUC@1234';
+$username = 'cyberchef';
+$password = 'Senha123';
 
 try {
     $pdo = new PDO("mysql:host=$host", $username, $password);
@@ -26,7 +26,7 @@ try {
         is_admin TINYINT(1) NOT NULL DEFAULT 0
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     
-CREATE TABLE IF NOT EXISTS Receita (
+    CREATE TABLE IF NOT EXISTS Receita (
         id_receita INT AUTO_INCREMENT PRIMARY KEY,
         tempo_preparo VARCHAR(50),
         modo_preparo TEXT,

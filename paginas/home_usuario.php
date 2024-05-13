@@ -15,13 +15,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login de Usuário</title>
-        <link rel="stylesheet" href="../css/style_cadastro.css">
+        <link rel="stylesheet" href="../css/style_home.css">
     </head>
     <body>
         <header>
             <nav class="navHeader">
-                <a href="index.html" id="link-logo" title="Página inicial">
-                <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
+                <a href="<?php echo (isset($_SESSION['usuario_id']) && $_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
+                    <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
                 </a>
                 <div class="search-container">
                 <input type="search" class="search-input" placeholder="Busque por uma receita, Chef ou Categoria.">
@@ -36,26 +36,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <a class="linksHeader" href=".">EM ALTA</a>
                     </li>
                     <li>
-                    <a class="linksHeader" href=".">NOVIDADES</li></a>
+                    <a class="linksHeader" href="../paginas/listar_receita.php">NOVIDADES</li></a>
                     </li>
                     <li>
                     <a class="linksHeader" href=".">CATEGORIA</a>
                     </li>
                 </ul>
+                <div class="user">Bem-vindo, <b> <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?><b>!</div>
+                <a href="../processos/logout.php" alt="Sair" title="Sair">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#FFF" version="1.1" id="Capa_1" width="25px" height="25px" viewBox="0 0 492.5 492.5" xml:space="preserve">
+                        <g>
+	                        <path d="M184.646,0v21.72H99.704v433.358h31.403V53.123h53.539V492.5l208.15-37.422v-61.235V37.5L184.646,0z M222.938,263.129   c-6.997,0-12.67-7.381-12.67-16.486c0-9.104,5.673-16.485,12.67-16.485s12.67,7.381,12.67,16.485   C235.608,255.748,229.935,263.129,222.938,263.129z"/>
+                        </g>
+                    </svg>
+                </a>
             </nav>
         </header>
         <main class="main-home">
             <h1>BEM-VINDO AO CYBER CHEF!</h1>
             <section class="btn-home">
-                <div>
+                <a href="postar_receita.php">
                     POSTE
-                </div>
-                <div>
+                </a>
+                <a href="postar_receita.php">
                     COMPARTILHE
-                </div>
-                <div>
+                </a>
+                <a href="postar_receita.php">
                     AVALIE
-                </div>
+                </a>
             </section>
             <section class="receita-home">
                 <div>
@@ -89,7 +97,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     Nome
                 </div>
             </section>
-            <!-- <a href="../processos/logout.php" class="logout-btn">Sair</a> -->
         </main>
     </body>
 </html>

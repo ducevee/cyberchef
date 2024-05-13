@@ -1,3 +1,16 @@
+<?php
+  $aErros[1] = "Usuário já existente!";
+  $mensagem = false;
+  if(isset($_GET['erro'])){
+    $mensagem = $aErros[$_GET['erro']];
+  }
+
+  if($mensagem) {
+    echo "<script>alert('" . htmlspecialchars($mensagem) . "');</script>";
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="PT-BR">
   <head>
@@ -24,7 +37,7 @@
   <body>
     <header>
         <nav class="navHeader">
-            <a href="index.html" id="link-logo" title="Página inicial">
+            <a id="link-logo" title="Página inicial">
               <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
             </a>
 

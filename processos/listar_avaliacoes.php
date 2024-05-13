@@ -43,35 +43,38 @@ try {
     $totalEstrelas = 0;
     $totalAvaliacoes = 0;
 
-        if ($result_avaliacoes->rowCount() > 0) {  
-            while ($row_avaliacao = $result_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
-                extract($row_avaliacao);
-                
-                $totalEstrelas += $qtde_estrelas;
-                $totalAvaliacoes++;
-                
-                echo "<p>Avaliação feita por: $usr <br> $created </p>";
+    if ($stmt_avaliacoes->rowCount() > 0) {  
+    while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
+    extract($row_avaliacao);
+    $id_usuario = $row_avaliacao['id_usuario']; // Aqui corrigimos para extrair o ID do usuário
 
-                for ($i = 1; $i <= 5; $i++) {
-                    if ($i <= $qtde_estrelas) {
-                        echo '<i class="estrela-preenchida fa-solid fa-star"></i>';
-                    } else {
-                        echo '<i class="estrela-vazia fa-solid fa-star"></i>';
-                    }
+
+            $totalEstrelas += $qtde_estrelas;
+            $totalAvaliacoes++;
+
+            echo "<div class='avaliacao' style>";
+            echo "<p><strong>Avaliação feita por:</strong> $nome_usuario</p>";
+            echo "<p><strong>Data:</strong> $created</p>";
+            echo "<p><strong>Estrelas:</strong>";
+            for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $qtde_estrelas) {
+                    echo '<i class="estrela-preenchida fa-solid fa-star"></i>';
+                } else {
+                    echo '<i class="estrela-vazia fa-solid fa-star"></i>';
                 }
-                echo "<p>Comentário: $mensagem</p>";
-                if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
-                    echo "<a href='../processos/excluir_avaliacao.php?id_avaliacao=$id_avaliacao'>Excluir avaliação</a>";
-                }
-                echo "<br><hr>";
-               
             }
-            
-            $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
-            $mediaFormatada = sprintf("%.1f", $mediaAvaliacoes); //vai limitar o numéro de casas decimais
-            echo "<p>Média das avaliações: $mediaFormatada</p>";
-        } else {
-            echo "<p>Não há avaliações cadastradas.</p>"; 
+            echo "</p>";
+            if (!empty($mensagem)){
+                echo "<p><strong>Comentário:</strong> $mensagem</p>";
+            }
+            echo "</div>";
+            if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
+                echo "<form method='POST' action='../processos/excluir_avaliacao.php'>";
+                echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
+                echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
+                echo "<button type='submit' style='padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-right: 5px; background-color: #dc3545; color: white;'>Excluir Avaliação</button>";
+                echo "</form>";}
+            echo "<br><hr>";
         }
     if ($stmt_avaliacoes->rowCount() > 0) {  
     while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
