@@ -1,52 +1,47 @@
 <?php
 session_start();
+date_default_timezone_set('America/Sao_Paulo');
 
 include_once '../processos/inicializar_banco.php';
 
 // Verificar se o usuário está logado
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true){  
-  try {
-    // Verificar se o ID do usuário está definido
-    if (!empty($_SESSION['usuario_id'])) {
-      $id_usuario = $_SESSION['usuario_id'];
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    try {
+        // Verificar se o ID da receita está definido
+        if (!empty($_POST['id_receita']) && !empty($_POST['estrela'])) {
+            $id_receita = $_POST['id_receita'];
+            $estrela = (int) $_POST['estrela'];
+            $mensagem = isset($_POST['mensagem']) ? $_POST['mensagem'] : '';
 
-      // Verificar se selecionou estrela
-      if (!empty($_POST['estrela'])) {
-        $estrela = (int) filter_input(INPUT_POST, 'estrela', FILTER_DEFAULT);
-        $mensagem = filter_input(INPUT_POST, 'mensagem', FILTER_DEFAULT);
+            // Preparar e executar a inserção da avaliação no banco de dados
+            $query = "INSERT INTO Avaliacao (qtde_estrelas, mensagem, created, fk_receita, fk_id_usuario) 
+                      VALUES (:qtde_estrelas, :mensagem, :created, :fk_receita, :fk_id_usuario)";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':qtde_estrelas', $estrela, PDO::PARAM_INT);
+            $stmt->bindParam(':mensagem', $mensagem, PDO::PARAM_STR);
+            $stmt->bindValue(':created', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $stmt->bindParam(':fk_id_usuario', $_SESSION['usuario_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':fk_receita', $id_receita, PDO::PARAM_INT);
 
-        // CADASTRAR NO BANCO
-        $query_avaliacoes = "INSERT INTO avaliacao (qtde_estrelas, mensagem, created, fk_id_usuario) VALUES (:qtde_estrelas, :mensagem, :created, :fk_id_usuario)";
-
-        $cad_avaliacoes = $pdo->prepare($query_avaliacoes);
-
-        $cad_avaliacoes->bindParam(':qtde_estrelas', $estrela, PDO::PARAM_INT);
-        $cad_avaliacoes->bindParam(':mensagem', $mensagem, PDO::PARAM_STR);
-        $created = date('Y-m-d H:i:s');
-        $cad_avaliacoes->bindParam(':created', $created, PDO::PARAM_STR);
-        $cad_avaliacoes->bindParam(':fk_id_usuario', $id_usuario, PDO::PARAM_INT); 
-
-        if ($cad_avaliacoes->execute()) {
-          $_SESSION['msg'] = "Avalição cadastrada com sucesso!";
+            if ($stmt->execute()) {
+                $_SESSION['msg'] = "Avaliação cadastrada com sucesso! <br>";
+            } else {
+                throw new PDOException("Erro ao cadastrar avaliação.");
+            }
         } else {
-          throw new PDOException("Erro ao cadastrar avaliação.");
+            throw new PDOException("Erro: ID da receita ou quantidade de estrelas não está definida.");
         }
-      } else {
-        throw new PDOException("Erro: é necessário selecionar pelo menos 1 estrela.");
-      }
-    } else {
-      throw new PDOException("Erro: ID do usuário não está definido.");
+    } catch (PDOException $e) {
+        $_SESSION['msg'] = "<p>Erro: " . $e->getMessage() . "</p>";
     }
-  } catch (PDOException $e) {
-    $_SESSION['msg'] = "<p>Erro: " . $e->getMessage() . "</p>";
-  }
-
- 
-  header("Location: ../paginas/receita.php");
-  exit(); 
+    // Redirecionar de volta para a página de visualização da receita após o processamento
+    header("Location: ../paginas/visualizar_receita.php?id=$id_receita");
+    exit();
 } else {
-  
-  header("Location: ../paginas/login.php");
-  exit(); 
+    // Se o usuário não estiver logado, redirecionar para a página de login
+    header("Location: ../paginas/login.php");
+    exit();
 }
+
+
 ?>
