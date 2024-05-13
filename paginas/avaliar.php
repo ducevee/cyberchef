@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (isset($_SESSION['usuario_id'])) {
     $id_usuario = $_SESSION['usuario_id'];
 } else {
@@ -25,6 +24,7 @@ if(isset($_SESSION['msg'])){
     echo $_SESSION['msg'];
     unset($_SESSION['msg']);
 }
+$id_receita = isset($_GET['id']) ? $_GET['id'] : null;
 
 ?>
 
@@ -45,8 +45,9 @@ if(isset($_SESSION['msg'])){
     <textarea name="mensagem" id="" cols="50" rows="4" placeholder="Digite seu comentário"></textarea> <br><br>
     <label for="foto">Inclua uma foto para complementar sua avaliação (opcional): </label><br><br>
     <input type="file" id="foto" name="foto" accept="image/*"><br><br>
+    <input type="hidden" name="id_receita" value="<?php echo $id_receita; ?>">
 
-    <input type="submit" value="cadastrar";>
+    <input type="submit" value="cadastrar" ;>
     
     <br><br>
     </div>
