@@ -1,11 +1,14 @@
 <?php
+import Swal from 'sweetalert2'
 session_start();
 date_default_timezone_set('America/Sao_Paulo');
 
 include_once '../processos/inicializar_banco.php';
+Swal.fire("SweetAlert2 is working!");
 
 // Verificar se o usuário está logado
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    
     try {
         // Verificar se o ID da receita está definido
         if (!empty($_POST['id_receita']) && !empty($_POST['estrela'])) {
@@ -24,7 +27,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             $stmt->bindParam(':fk_receita', $id_receita, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                $_SESSION['msg'] = "Avaliação cadastrada com sucesso!";
+                $_SESSION['msg'] = "Avaliação cadastrada com sucesso! <br>";
             } else {
                 throw new PDOException("Erro ao cadastrar avaliação.");
             }
