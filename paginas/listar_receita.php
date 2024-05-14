@@ -3,6 +3,7 @@ session_start();
 
 include_once '../processos/inicializar_banco.php';
 
+
 if(isset($_GET['mensagem'])) {
     $mensagem = $_GET['mensagem'];
     echo "<script>alert('" . htmlspecialchars($mensagem) . "');</script>";
@@ -157,7 +158,15 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <input type="hidden" name="id_receita" value="<?= htmlspecialchars($receita['id_receita']); ?>">
                                 <button type="submit">Alterar Receita</button>
                             </form>
-                        <?php endif; ?>
+                        <?php else: ?>
+                            <!-- Botão de denunciar receita apenas para usuários logados e que não são o dono da receita -->
+                            <?php if (isset($_SESSION['usuario_id'])) : ?>
+                                <form action="../processos/denunciar_receita.php" method="post">
+                                    <input type="hidden" name="id_receita" value="<?= $receita['id_receita']; ?>">
+                                    <button type="button" class="btn-denunciar" onclick="denunciarReceita(<?= $receita['id_receita']; ?>);">Denunciar Receita</button>
+                                </form>
+                        <?php endif; ?> 
+                    <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -167,3 +176,31 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </main>
 </body>
 </html>
+
+<!-- Adicionando um modal para denunciar receita -->
+<div id="modalDenuncia" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Denunciar Receita</h2>
+        </div>
+        <div class="modal-body">
+            <form action="../processos/denunciar_receita.php" method="post">
+                <input type="hidden" name="id_receita" id="idReceitaDenuncia" value="">
+                <label for="motivoDenuncia">Motivo da Denúncia:</label>
+                <textarea id="motivoDenuncia" name="motivo" required></textarea>
+                <div class="modal-footer">
+                    <button type="submit" name="denunciar" style="background-color:#4CAF50; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Enviar Denúncia</button>
+                    <button type="button" onclick="document.getElementById('modalDenuncia').style.display='none'" style="background-color:red; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function denunciarReceita(idReceita) {
+        document.getElementById('idReceitaDenuncia').value = idReceita;
+        document.getElementById('modalDenuncia').style.display = 'block';
+    }
+</script>
