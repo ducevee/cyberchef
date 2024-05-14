@@ -3,6 +3,9 @@ $host = 'localhost';
 $dbname = 'cyberchef';
 $username = 'root';
 $password = 'PUC@1234';
+$username = 'edu';
+$password = 'Senha123';
+
 try {
     $pdo = new PDO("mysql:host=$host", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -37,6 +40,7 @@ try {
         titulo VARCHAR(50),
         dificuldade VARCHAR(10),
         fk_id_usuario INT,
+        denunciada TINYINT(1) DEFAULT 0,
         FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id)
     );
     
@@ -66,6 +70,7 @@ try {
     
     CREATE TABLE IF NOT EXISTS Denuncia (
         id_denuncia INT AUTO_INCREMENT PRIMARY KEY,
+        motivo TEXT,
         fk_id_receita INT,
         data_denuncia DATETIME,
         fk_Avaliacao_id_avaliacao INT,
@@ -94,7 +99,7 @@ try {
         FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
     );";
 
-    // Criar a tabela de usuários se não existir
+    // Criar as tabelas no banco de dados
     $pdo->exec($sql);
                 
 } catch (PDOException $e) {
