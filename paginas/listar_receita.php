@@ -117,6 +117,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <a class="linksHeader" href=".">CATEGORIA</a>
                     </li>
                 </ul>
+            
                 <?php
                     if (isset($_SESSION['usuario_id'])) {
                         echo "<div class='user'>Bem-vindo, <b>" . htmlspecialchars($_SESSION['usuario_nome']) . "!</b></div>";
@@ -131,6 +132,9 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 ?>
             </nav>
         </header>
+        <a href="../paginas/home_usuario.php" style="font-family: 'Maven Pro', sans-serif; font-size: 50px; margin-left: 20px;">
+    &larr; 
+</a>
     <main>
         <!-- Exibir as receitas -->
         <?php if (!empty($receitas)) : ?>

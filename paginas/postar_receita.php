@@ -66,7 +66,7 @@ if(isset($_GET['mensagem'])) {
             <option value="vazio" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'vazio') ? 'selected' : ''; ?>></option>
             <option value="fatia" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'fatia') ? 'selected' : ''; ?>>Fatia(s)</option>
             <option value="prato" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'prato') ? 'selected' : ''; ?>>Prato(s)</option>
-            <option value="porcao" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'porcao') ? 'selected' : ''; ?>>Porção(s)</option>
+            <option value="porcao" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'porcao') ? 'selected' : ''; ?>>Porção(ões)</option>
             <option value="copo" <?= (isset($receita['tipo_porcao']) && $receita['tipo_porcao'] == 'copo') ? 'selected' : ''; ?>>Copo(s)</option>
         </select>
         <br><br>
