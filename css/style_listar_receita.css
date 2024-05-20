@@ -162,6 +162,14 @@ main img {
     margin: 0 auto 10px;
 }
 
+.descricao {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limita a 3 linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Responsividade */
 @media (min-width: 600px) {
     main ul {

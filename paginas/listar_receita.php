@@ -68,7 +68,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_receita'])) {
     }
 }
 
-// Consulta SQL para obter todas as receitas com seus ingredientes, categorias e usuário associados
+// Capturando dados do filtro
+$dificuldade = $_GET['dificuldade'] ?? '';
+$categorias = $_GET['categorias'] ?? [];
+$search_query = $_GET['search_query'] ?? '';
+
+// Preparando condições para a consulta SQL
+$conditions = [];
+$params = [];
+
+if (!empty($search_query)) {
+    $search_query = "%$search_query%";
+    $conditions[] = "(r.titulo LIKE :search_query OR u.nome LIKE :search_query OR c.categoria LIKE :search_query)";
+    $params[':search_query'] = $search_query;
+}
+
+if (!empty($dificuldade)) {
+    $conditions[] = "r.dificuldade = :dificuldade";
+    $params[':dificuldade'] = $dificuldade;
+}
+
+if (!empty($categorias)) {
+    $placeholders = implode(',', array_fill(0, count($categorias), '?'));
+    $conditions[] = "c.categoria IN ($placeholders)";
+    $params = array_merge($params, $categorias);
+}
+
+// Montando a consulta SQL baseada nas condições existentes
 $sql = "SELECT r.*, 
                 GROUP_CONCAT(DISTINCT i.ingrediente SEPARATOR ', ') AS ingredientes, 
                 GROUP_CONCAT(DISTINCT c.categoria SEPARATOR ', ') AS categorias,
@@ -78,9 +104,16 @@ $sql = "SELECT r.*,
         LEFT JOIN Ingredientes i ON ri.id_ingrediente = i.id_ingrediente
         LEFT JOIN Receita_Categoria rc ON r.id_receita = rc.id_receita
         LEFT JOIN Categoria c ON rc.id_categoria = c.id_categoria
-        LEFT JOIN usuarios u ON r.fk_id_usuario = u.id
-        GROUP BY r.id_receita"; // Agrupar para evitar duplicatas de receitas
-$stmt = $pdo->query($sql);
+        LEFT JOIN usuarios u ON r.fk_id_usuario = u.id";
+
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(' AND ', $conditions);
+}
+
+$sql .= " GROUP BY r.id_receita";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -98,14 +131,14 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <a href="<?php echo (isset($_SESSION['usuario_id']) && $_SESSION['is_admin'] == 1) ? 'home_admin.php' : 'home_usuario.php'; ?>" id="link-logo" title="Página inicial">
                     <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
                 </a>
-                <div class="search-container">
-                <input type="search" class="search-input" placeholder="Busque por uma receita, Chef ou Categoria.">
-                <button class="search-button">
-                    <svg width="19" height="21" viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.0114 15.7233H18.7467L18.2985 15.3373C19.8674 13.7078 20.8119 11.5923 20.8119 9.29102C20.8119 4.15952 16.1532 0 10.4059 0C4.65866 0 0 4.15952 0 9.29102C0 14.4225 4.65866 18.582 10.4059 18.582C12.9834 18.582 15.3528 17.7387 17.1778 16.3379L17.6101 16.7381V17.8674L25.6146 25L28 22.8702L20.0114 15.7233ZM10.4059 15.7233C6.41967 15.7233 3.20183 12.8502 3.20183 9.29102C3.20183 5.73185 6.41967 2.85878 10.4059 2.85878C14.3922 2.85878 17.6101 5.73185 17.6101 9.29102C17.6101 12.8502 14.3922 15.7233 10.4059 15.7233Z" fill="white"/>
-                    </svg>                  
-                </button>
-                </div>
+                <form class="search-container" method="get" action="">
+                    <input type="search" name="search_query" class="search-input" placeholder="Busque por uma receita, Chef ou Categoria.">
+                    <button type="submit" class="search-button">
+                        <svg width="19" height="21" viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.0114 15.7233H18.7467L18.2985 15.3373C19.8674 13.7078 20.8119 11.5923 20.8119 9.29102C20.8119 4.15952 16.1532 0 10.4059 0C4.65866 0 0 4.15952 0 9.29102C0 14.4225 4.65866 18.582 10.4059 18.582C12.9834 18.582 15.3528 17.7387 17.1778 16.3379L17.6101 16.7381V17.8674L25.6146 25L28 22.8702L20.0114 15.7233ZM10.4059 15.7233C6.41967 15.7233 3.20183 12.8502 3.20183 9.29102C3.20183 5.73185 6.41967 2.85878 10.4059 2.85878C14.3922 2.85878 17.6101 5.73185 17.6101 9.29102C17.6101 12.8502 14.3922 15.7233 10.4059 15.7233Z" fill="white"/>
+                        </svg> 
+                    </button>
+                </form>
                 <ul id="lista">
                     <li>
                     <a class="linksHeader" href=".">EM ALTA</a>
@@ -133,6 +166,35 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </header>
     <main>
         <!-- Exibir as receitas -->
+        <form action="listar_receita.php" method="get">
+            <label for="dificuldade">Dificuldade:</label><br>
+            <select id="dificuldade" name="dificuldade">
+                <option value="">Todas</option>
+                <option value="facil">Fácil</option>
+                <option value="medio">Médio</option>
+                <option value="dificil">Difícil</option>
+            </select><br><br>
+
+            <label for="categoria">Categorias:</label><br>
+            <select id="categoria" name="categorias[]" multiple size="10">
+                <option value="Salgado">Salgado</option>
+                <option value="Doce">Doce</option>
+                <option value="Almoço">Almoço</option>
+                <option value="Massa">Massa</option>
+                <option value="Café da manhã">Café da manhã</option>
+                <option value="Carnes">Carnes</option>
+                <option value="Jantar">Jantar</option>
+                <option value="Frutos do mar">Frutos do mar</option>
+                <option value="Vegetariano">Vegetariano</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Vegano">Vegano</option>
+                <option value="Sobremesa">Sobremesa</option>
+                <option value="Ensopados">Ensopados</option>
+            </select><br><br>
+
+            <button type="submit">Filtrar</button>
+        </form>
+
         <?php if (!empty($receitas)) : ?>
             <ul>
                 <?php foreach ($receitas as $receita) : ?>
@@ -143,7 +205,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <img src="../uploads/<?= htmlspecialchars($receita['foto']); ?>" alt="Foto da receita de <?= htmlspecialchars($receita['titulo']); ?>" style="width:100px; height:auto;">
                         <p>Rendimento: <?= $receita['qtde_porcoes'] . ' ' . $receita['tipo_porcao']; ?></p>
                         <p>Tempo de preparo: <?= $receita['tempo_preparo']; ?></p>
-                        <p>Descrição: <?= $receita['descricao']; ?></p>
+                        <p class="descricao">Descrição: <?= $receita['descricao']; ?></p>
                         <p>Modo de preparo: <?= $receita['modo_preparo']; ?></p>
                         <p>Dificuldade: <?= $receita['dificuldade']; ?></p>
                         <p>Ingredientes: <?= $receita['ingredientes']; ?></p>
@@ -177,7 +239,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 </html>
 
-<!-- Adicionando um modal para denunciar receita -->
+<!-- Modal para denunciar receita -->
 <div id="modalDenuncia" class="modal">
     <div class="modal-content">
         <div class="modal-header">
