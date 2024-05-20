@@ -1,8 +1,6 @@
 <?php
-$host = 'localhost';
+$host = '127.0.0.1';
 $dbname = 'cyberchef';
-$username = 'root';
-$password = 'PUC@1234';
 $username = 'edu';
 $password = 'Senha123';
 
