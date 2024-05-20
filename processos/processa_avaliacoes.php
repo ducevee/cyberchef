@@ -24,9 +24,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             $stmt->bindParam(':fk_receita', $id_receita, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                $_SESSION['msg'] = "Avaliação cadastrada com sucesso!";
+                $_SESSION['msg'] = "<script>alert('Avaliação feita com sucesso!');</script>";
             } else {
-                throw new PDOException("Erro ao cadastrar avaliação.");
+                throw new PDOException("<script>alert('Erro ao cadastrar avaliação');</script>");
             }
         } else {
             throw new PDOException("Erro: ID da receita ou quantidade de estrelas não está definida.");
