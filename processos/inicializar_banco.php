@@ -102,3 +102,5 @@ try {
     die("Erro ao configurar banco de dados: " . $e->getMessage());
 }
 ?>
+
+<!-- Restante do formulário -->
