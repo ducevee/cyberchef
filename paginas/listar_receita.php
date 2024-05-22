@@ -50,6 +50,24 @@ function excluir_receita($id_receita) {
     }
 }
 
+// Verificar se o formulário de exclusão foi submetido
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_receita'])) {
+    $id_receita_excluir = $_POST['id_receita_excluir'];
+
+    if (!empty($id_receita_excluir)) {
+        $exclusao_sucesso = excluir_receita($id_receita_excluir);
+        if ($exclusao_sucesso) {
+            echo "<script>alert('Receita excluída com sucesso!');</script>";
+            // Recarregar a página após a exclusão
+            echo "<script>window.location.href = '../paginas/listar_receita.php';</script>";
+            exit;
+        } else {
+            echo "<script>alert('Erro ao excluir a receita. Por favor, tente novamente.');</script>";
+        }
+    }
+}
+
+
 // Capturando dados do filtro
 $dificuldade = $_GET['dificuldade'] ?? '';
 $categorias = $_GET['categorias'] ?? [];
