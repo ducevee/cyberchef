@@ -80,6 +80,36 @@ $denuncias = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, u
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <h2>Avaliações Denunciadas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Denúncia</th>
+                        <th>ID Avaliação</th>
+                        <th>Motivo</th>
+                        <th>Receita</th>
+                        <th>Denunciante</th>
+                        <th>Data Denúncia</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($denuncias as $denuncia): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($denuncia['id_denuncia']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['id_avaliacao']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['motivo']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['receita_titulo']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['denunciante_nome']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['data_denuncia']); ?></td>
+                        <td>
+                            <a href="../processos/excluir_denuncia.php?id=<?= $denuncia['id_denuncia']; ?>" class="editar-btn" onclick="return confirm('Tem certeza que deseja excluir esta denúncia?')">Excluir Denúncia</a>
+                            <a href="../processos/excluir_avaliacao.php?id=<?= $denuncia['fk_id_avaliacao']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir esta avaliação?')">Excluir Avaliação</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </section>
     </main>
 </body>
