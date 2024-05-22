@@ -109,7 +109,8 @@ if (isset($_SESSION['usuario_id'])) {
 ?>
 <div class="avaliacoes">
     <h1 style="font-family: 'Maven Pro', sans-serif;";>Avalie</h1>
-    <p style="font-family: 'Maven Pro', sans-serif;";>Dê uma nota e adicione um cometário à essa receita!</p>
+    <p style="font-family: 'Maven Pro', sans-serif;";>Dê uma nota e adicione um comentário à essa receita!</p>
+
 
     <?php
     if(isset($_SESSION['msg'])){
@@ -136,9 +137,12 @@ if (isset($_SESSION['usuario_id'])) {
         <textarea name="mensagem" id="" cols="50" rows="4" placeholder="Deixe aqui sua opinião!" style="width: 350px; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></textarea> <br>
         <input type="hidden" name="id_receita" value="<?php echo $id_receita; ?>">
 
-        <input type="submit" value="Cadastrar" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 14px; font-family: 'Maven Pro', sans-serif;">
-        
+        <input type="submit" value="Cadastrar" style="background-color: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 14px; font-family: 'Maven Pro', sans-serif;">
+
         <br><br>
+        <h1 style="font-family: 'Maven Pro', sans-serif;";>Avaliações</h1>
+    
+
 </div>
 </form>
 <?php include '../processos/listar_avaliacoes.php' ?>
