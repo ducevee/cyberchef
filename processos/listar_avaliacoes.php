@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar Receita</title>
-    <!-- Adicione o link para o arquivo CSS aqui -->
-    <link rel="stylesheet" href="../caminho/do/seu/arquivo/style_visualizar_receita.css">
+    <link rel="stylesheet" href="../css/style_listar_receita.css">
+    <style>
+        .botao-denunciar {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #007bff; /* Azul */
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
-
     <?php
-
     include_once '../processos/inicializar_banco.php';
 
     $id_receita = isset($_GET['id']) ? $_GET['id'] : null;
@@ -20,9 +27,7 @@
         exit;
     }
 
-
     try {
-        // Busca detalhada da receita, incluindo ingredientes e categorias
         $stmt = $pdo->prepare("
             SELECT r.*, u.nome AS nome_usuario, 
                 GROUP_CONCAT(DISTINCT i.ingrediente SEPARATOR ', ') AS ingredientes, 
@@ -56,16 +61,15 @@
         $totalEstrelas = 0;
         $totalAvaliacoes = 0;
 
-        if ($stmt_avaliacoes->rowCount() > 0) {  
-        while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
-        extract($row_avaliacao);
-        $id_usuario = $row_avaliacao['id_usuario']; // Aqui corrigimos para extrair o ID do usuário
-
+        if ($stmt_avaliacoes->rowCount() > 0) {
+            while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
+                extract($row_avaliacao);
+                $id_usuario = $row_avaliacao['id_usuario'];
 
                 $totalEstrelas += $qtde_estrelas;
                 $totalAvaliacoes++;
 
-                echo "<div class='avaliacao' style>";
+                echo "<div class='avaliacao'>";
                 echo "<p><strong>Avaliação feita por:</strong> $nome_usuario</p>";
                 echo "<p><strong>Data:</strong> $created</p>";
                 echo "<p><strong>Estrelas:</strong>";
@@ -76,65 +80,38 @@
                         echo '<i class="estrela-vazia fa-solid fa-star"></i>';
                     }
                 }
-
-                
-
                 echo "</p>";
                 if (!empty($mensagem)){
                     echo "<p><strong>Comentário:</strong> $mensagem</p>";
                 }
-                // Botão para excluir a avaliação
                 if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
                     echo "<form method='POST' action='../processos/excluir_avaliacao.php'>";
                     echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
-                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
+                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>";
                     echo "<button type='submit' style='padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-right: 5px; background-color: #dc3545; color: white;'>Excluir Avaliação</button>";
                     echo "</form>";
                 }
-                // Botão para denunciar a avaliação
                 if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] != $id_usuario) {
-
-                    echo "<form method='POST' action='../processos/denunciar_avaliacao.php'>";
                     echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
-                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
-                    echo "<button type='submit' style='background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;'>Denunciar Avaliação</button>";
+                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>";
+                    echo '<button onclick="denunciarAvaliacao()" class="botao-denunciar">Denunciar Avaliação</button>'; 
                     echo "</form>";
-                    echo "</div>";
-                    echo "<br><hr>";
                 }
+                echo "</div>";
+                echo "<br><br>";
+                echo "<hr>"; // Linha divisória entre as avaliações
             }
-            
-            // Calcula a média das avaliações
+
             $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
-            $mediaFormatada = number_format($mediaAvaliacoes, 1); // Formata para uma casa decimal
+            $mediaFormatada = number_format($mediaAvaliacoes, 1);
             echo "<p><strong>Média das avaliações:</strong> $mediaFormatada</p>";
         } else {
-            echo "<p>Não há avaliações para esta receita ainda.</p>"; 
+            echo "<p>Não há avaliações para esta receita ainda.</p>";
         }
     } catch (PDOException $e) {
         die("Erro de banco de dados: " . $e->getMessage());
     }
     ?>
-
-    <!-- Modal para denunciar avaliação -->
-    <div id="modalDenunciaAvaliacao" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Denunciar Avaliação</h2>
-            </div>
-            <div class="modal-body">
-                <form action="../processos/denunciar_avaliacao.php" method="post">
-                    <input type="hidden" name="id_avaliacao" id="idAvaliacaoDenuncia" value="">
-                    <label for="motivoDenunciaAvaliacao">Motivo da Denúncia:</label>
-                    <textarea id="motivoDenunciaAvaliacao" name="motivo" required></textarea>
-                    <div class="modal-footer">
-                        <button type="submit" name="denunciar" class="btn-denunciar">Enviar Denúncia</button>
-                        <button type="button" onclick="fecharModalDenunciaAvaliacao()" class="btn-cancelar">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <script>
         function toggleDropdown() {
@@ -146,7 +123,6 @@
             } else {
                 dropdownContent.style.display = "block";
                 dropbtn.classList.add("active");
-                // Ajusta a largura do conteúdo dropdown para ser igual à largura do botão
                 dropdownContent.style.width = dropbtn.offsetWidth + "px";
             }
         }
@@ -161,5 +137,41 @@
         }
     </script>
 
+    <!-- Modal para denunciar avaliação -->
+    <div id="modalDenunciaAvaliacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Denunciar Avaliação</h2>
+                <span class="close" onclick="document.getElementById('modalDenunciaAvaliacao').style.display='none'">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="../processos/denunciar_avaliacao.php" method="post">
+                    <input type="hidden" name="id_avaliacao" id="idAvaliacaoDenuncia" value="">
+                    <label for="motivoDenunciaAvaliacao">Motivo da Denúncia:</label>
+                    <textarea id="motivoDenunciaAvaliacao" name="motivo" required></textarea>
+                    <div class="modal-footer">
+                        <button type="submit" name="denunciar" style="background-color:#4CAF50; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Enviar Denúncia</button>
+                        <button type="button" onclick="document.getElementById('modalDenunciaAvaliacao').style.display='none'" style="background-color:red; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function denunciarAvaliacao(idAvaliacao) {
+            document.getElementById('idAvaliacaoDenuncia').value = idAvaliacao;
+            document.getElementById('modalDenunciaAvaliacao').style.display = 'block';
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('modalDenunciaAvaliacao');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+<!-- Botão para denunciar avaliação -->
 </body>
 </html>
