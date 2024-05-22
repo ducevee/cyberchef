@@ -72,14 +72,14 @@ try {
                 echo "<form method='POST' action='../processos/excluir_avaliacao.php'>";
                 echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
                 echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
-                echo "<button type='submit'>Excluir Avaliação</button>";
+                echo "<button type='submit' style='padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-right: 5px; background-color: #dc3545; color: white;'>Excluir Avaliação</button>";
                 echo "</form>";
             }
             // Botão para denunciar a avaliação
             echo "<form method='POST' action='../processos/denunciar_avaliacao.php'>";
             echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
             echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
-            echo "<button type='submit'>Denunciar Avaliação</button>";
+            echo "<button type='submit' style='background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;'>Denunciar Avaliação</button>";
             echo "</form>";
             echo "</div>";
             echo "<br><hr>";
