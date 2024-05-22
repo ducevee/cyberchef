@@ -1,98 +1,165 @@
-<?php
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Receita</title>
+    <!-- Adicione o link para o arquivo CSS aqui -->
+    <link rel="stylesheet" href="../caminho/do/seu/arquivo/style_visualizar_receita.css">
+</head>
+<body>
 
-include_once '../processos/inicializar_banco.php';
 
-$id_receita = isset($_GET['id']) ? $_GET['id'] : null;
-if (!$id_receita) {
-    echo "<script>alert('Nenhuma receita especificada.'); window.location.href='listar_receita.php';</script>";
-    exit;
-}
+    <?php
 
-try {
-    // Busca detalhada da receita, incluindo ingredientes e categorias
-    $stmt = $pdo->prepare("
-        SELECT r.*, u.nome AS nome_usuario, 
-            GROUP_CONCAT(DISTINCT i.ingrediente SEPARATOR ', ') AS ingredientes, 
-            GROUP_CONCAT(DISTINCT c.categoria SEPARATOR ', ') AS categorias
-        FROM Receita r
-        JOIN usuarios u ON r.fk_id_usuario = u.id
-        LEFT JOIN Receita_Ingrediente ri ON r.id_receita = ri.id_receita
-        LEFT JOIN Ingredientes i ON ri.id_ingrediente = i.id_ingrediente
-        LEFT JOIN Receita_Categoria rc ON r.id_receita = rc.id_receita
-        LEFT JOIN Categoria c ON rc.id_categoria = c.id_categoria
-        WHERE r.id_receita = ?
-        GROUP BY r.id_receita
-    ");
-    $stmt->execute([$id_receita]);
-    $receita = $stmt->fetch(PDO::FETCH_ASSOC);
+    include_once '../processos/inicializar_banco.php';
 
-    if (!$receita) {
-        echo "<script>alert('Receita não encontrada.'); window.location.href='listar_receita.php';</script>";
+    $id_receita = isset($_GET['id']) ? $_GET['id'] : null;
+    if (!$id_receita) {
+        echo "<script>alert('Nenhuma receita especificada.'); window.location.href='listar_receita.php';</script>";
         exit;
     }
 
-    $query_avaliacoes = "SELECT a.id_avaliacao, a.qtde_estrelas, a.mensagem, a.created, u.id AS id_usuario, u.nome AS nome_usuario
-    FROM Avaliacao AS a
-    INNER JOIN usuarios AS u ON a.fk_id_usuario = u.id
-    WHERE a.fk_receita = ?
-    ORDER BY a.created DESC";
 
-    $stmt_avaliacoes = $pdo->prepare($query_avaliacoes);
-    $stmt_avaliacoes->execute([$id_receita]);
+    try {
+        // Busca detalhada da receita, incluindo ingredientes e categorias
+        $stmt = $pdo->prepare("
+            SELECT r.*, u.nome AS nome_usuario, 
+                GROUP_CONCAT(DISTINCT i.ingrediente SEPARATOR ', ') AS ingredientes, 
+                GROUP_CONCAT(DISTINCT c.categoria SEPARATOR ', ') AS categorias
+            FROM Receita r
+            JOIN usuarios u ON r.fk_id_usuario = u.id
+            LEFT JOIN Receita_Ingrediente ri ON r.id_receita = ri.id_receita
+            LEFT JOIN Ingredientes i ON ri.id_ingrediente = i.id_ingrediente
+            LEFT JOIN Receita_Categoria rc ON r.id_receita = rc.id_receita
+            LEFT JOIN Categoria c ON rc.id_categoria = c.id_categoria
+            WHERE r.id_receita = ?
+            GROUP BY r.id_receita
+        ");
+        $stmt->execute([$id_receita]);
+        $receita = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $totalEstrelas = 0;
-    $totalAvaliacoes = 0;
+        if (!$receita) {
+            echo "<script>alert('Receita não encontrada.'); window.location.href='listar_receita.php';</script>";
+            exit;
+        }
 
-    if ($stmt_avaliacoes->rowCount() > 0) {  
-    while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
-    extract($row_avaliacao);
-    $id_usuario = $row_avaliacao['id_usuario']; // Aqui corrigimos para extrair o ID do usuário
+        $query_avaliacoes = "SELECT a.id_avaliacao, a.qtde_estrelas, a.mensagem, a.created, u.id AS id_usuario, u.nome AS nome_usuario
+        FROM Avaliacao AS a
+        INNER JOIN usuarios AS u ON a.fk_id_usuario = u.id
+        WHERE a.fk_receita = ?
+        ORDER BY a.created DESC";
+
+        $stmt_avaliacoes = $pdo->prepare($query_avaliacoes);
+        $stmt_avaliacoes->execute([$id_receita]);
+
+        $totalEstrelas = 0;
+        $totalAvaliacoes = 0;
+
+        if ($stmt_avaliacoes->rowCount() > 0) {  
+        while ($row_avaliacao = $stmt_avaliacoes->fetch(PDO::FETCH_ASSOC)) {
+        extract($row_avaliacao);
+        $id_usuario = $row_avaliacao['id_usuario']; // Aqui corrigimos para extrair o ID do usuário
 
 
-            $totalEstrelas += $qtde_estrelas;
-            $totalAvaliacoes++;
+                $totalEstrelas += $qtde_estrelas;
+                $totalAvaliacoes++;
 
-            echo "<div class='avaliacao' style>";
-            echo "<p><strong>Avaliação feita por:</strong> $nome_usuario</p>";
-            echo "<p><strong>Data:</strong> $created</p>";
-            echo "<p><strong>Estrelas:</strong>";
-            for ($i = 1; $i <= 5; $i++) {
-                if ($i <= $qtde_estrelas) {
-                    echo '<i class="estrela-preenchida fa-solid fa-star"></i>';
-                } else {
-                    echo '<i class="estrela-vazia fa-solid fa-star"></i>';
+                echo "<div class='avaliacao' style>";
+                echo "<p><strong>Avaliação feita por:</strong> $nome_usuario</p>";
+                echo "<p><strong>Data:</strong> $created</p>";
+                echo "<p><strong>Estrelas:</strong>";
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $qtde_estrelas) {
+                        echo '<i class="estrela-preenchida fa-solid fa-star"></i>';
+                    } else {
+                        echo '<i class="estrela-vazia fa-solid fa-star"></i>';
+                    }
+                }
+
+                
+
+                echo "</p>";
+                if (!empty($mensagem)){
+                    echo "<p><strong>Comentário:</strong> $mensagem</p>";
+                }
+                // Botão para excluir a avaliação
+                if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
+                    echo "<form method='POST' action='../processos/excluir_avaliacao.php'>";
+                    echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
+                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
+                    echo "<button type='submit' style='padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-right: 5px; background-color: #dc3545; color: white;'>Excluir Avaliação</button>";
+                    echo "</form>";
+                }
+                // Botão para denunciar a avaliação
+                if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] != $id_usuario) {
+
+                    echo "<form method='POST' action='../processos/denunciar_avaliacao.php'>";
+                    echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
+                    echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
+                    echo "<button type='submit' style='background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;'>Denunciar Avaliação</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "<br><hr>";
                 }
             }
-            echo "</p>";
-            if (!empty($mensagem)){
-                echo "<p><strong>Comentário:</strong> $mensagem</p>";
-            }
-            // Botão para excluir a avaliação
-            if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $id_usuario) {
-                echo "<form method='POST' action='../processos/excluir_avaliacao.php'>";
-                echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
-                echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
-                echo "<button type='submit' style='padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-right: 5px; background-color: #dc3545; color: white;'>Excluir Avaliação</button>";
-                echo "</form>";
-            }
-            // Botão para denunciar a avaliação
-            echo "<form method='POST' action='../processos/denunciar_avaliacao.php'>";
-            echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
-            echo "<input type='hidden' name='fk_receita' value='$id_receita'>"; // Adicionando o id da receita
-            echo "<button type='submit' style='background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;'>Denunciar Avaliação</button>";
-            echo "</form>";
-            echo "</div>";
-            echo "<br><hr>";
+            
+            // Calcula a média das avaliações
+            $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
+            $mediaFormatada = number_format($mediaAvaliacoes, 1); // Formata para uma casa decimal
+            echo "<p><strong>Média das avaliações:</strong> $mediaFormatada</p>";
+        } else {
+            echo "<p>Não há avaliações para esta receita ainda.</p>"; 
         }
-        
-        // Calcula a média das avaliações
-        $mediaAvaliacoes = $totalEstrelas / $totalAvaliacoes;
-        $mediaFormatada = number_format($mediaAvaliacoes, 1); // Formata para uma casa decimal
-        echo "<p><strong>Média das avaliações:</strong> $mediaFormatada</p>";
-    } else {
-        echo "<p>Não há avaliações para esta receita ainda.</p>"; 
+    } catch (PDOException $e) {
+        die("Erro de banco de dados: " . $e->getMessage());
     }
-} catch (PDOException $e) {
-    die("Erro de banco de dados: " . $e->getMessage());
-}
-?>
+    ?>
+
+    <!-- Modal para denunciar avaliação -->
+    <div id="modalDenunciaAvaliacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Denunciar Avaliação</h2>
+            </div>
+            <div class="modal-body">
+                <form action="../processos/denunciar_avaliacao.php" method="post">
+                    <input type="hidden" name="id_avaliacao" id="idAvaliacaoDenuncia" value="">
+                    <label for="motivoDenunciaAvaliacao">Motivo da Denúncia:</label>
+                    <textarea id="motivoDenunciaAvaliacao" name="motivo" required></textarea>
+                    <div class="modal-footer">
+                        <button type="submit" name="denunciar" class="btn-denunciar">Enviar Denúncia</button>
+                        <button type="button" onclick="fecharModalDenunciaAvaliacao()" class="btn-cancelar">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdown-content");
+            var dropbtn = document.getElementById("dropbtn");
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+                dropbtn.classList.remove("active");
+            } else {
+                dropdownContent.style.display = "block";
+                dropbtn.classList.add("active");
+                // Ajusta a largura do conteúdo dropdown para ser igual à largura do botão
+                dropdownContent.style.width = dropbtn.offsetWidth + "px";
+            }
+        }
+
+        function denunciarAvaliacao(idAvaliacao) {
+            document.getElementById('idAvaliacaoDenuncia').value = idAvaliacao;
+            document.getElementById('modalDenunciaAvaliacao').style.display = 'block';
+        }
+
+        function fecharModalDenunciaAvaliacao() {
+            document.getElementById('modalDenunciaAvaliacao').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
