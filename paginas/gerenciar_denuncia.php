@@ -30,7 +30,7 @@ $denuncias = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, u
             </div>
             <ul id="lista">
                 <li>
-                <a class="linksHeader" href="gerenciar_denuncia.php">GERENCIAR RECEITAS</a>
+                <a class="linksHeader" href="gerenciar_denuncia.php">GERENCIAR DENÚNCIAS</a>
                 </li>
                 <li>
                 <a class="linksHeader" href="home_admin.php">GERENCIAR USUÁRIOS</a>
