@@ -7,7 +7,7 @@ if (isset($_POST['denunciar'])) {
     $id_usuario = $_SESSION['usuario_id'];
     $motivo = $_POST['motivo']; // Capturar o motivo da denúncia
 
-    $sql = "INSERT INTO DenunciaAvaliacao (fk_id_avaliacao, fk_id_usuario, data_denuncia, motivo) VALUES (:id_avaliacao, :id_usuario, NOW(), :motivo)";
+    $sql = "INSERT INTO Denuncia (fk_Avaliacao_id_avaliacao, fk_id_usuario, data_denuncia, motivo) VALUES (:id_avaliacao, :id_usuario, NOW(), :motivo)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id_avaliacao', $id_avaliacao);
     $stmt->bindParam(':id_usuario', $id_usuario);
