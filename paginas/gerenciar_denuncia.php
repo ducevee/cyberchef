@@ -9,7 +9,11 @@ exit;
 }
 
 
-$denuncias = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, usuarios.nome AS denunciante_nome FROM Denuncia JOIN Receita ON Denuncia.fk_id_receita = Receita.id_receita JOIN usuarios ON Denuncia.fk_id_usuario = usuarios.id")->fetchAll(PDO::FETCH_ASSOC);
+// Buscar denúncias de receitas
+$denuncias_receitas = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, usuarios.nome AS denunciante_nome FROM Denuncia JOIN Receita ON Denuncia.fk_id_receita = Receita.id_receita JOIN usuarios ON Denuncia.fk_id_usuario = usuarios.id")->fetchAll(PDO::FETCH_ASSOC);
+
+// Buscar denúncias de avaliações
+$denuncias_avaliacoes = $pdo->query("SELECT Denuncia.*, Avaliacao.id_avaliacao, Receita.titulo AS receita_titulo, usuarios.nome AS denunciante_nome FROM Denuncia JOIN Avaliacao ON Denuncia.fk_Avaliacao_id_avaliacao = Avaliacao.id_avaliacao JOIN Receita ON Avaliacao.fk_receita = Receita.id_receita JOIN usuarios ON Denuncia.fk_id_denunciante = usuarios.id WHERE Denuncia.fk_Avaliacao_id_avaliacao IS NOT NULL")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,7 +69,7 @@ $denuncias = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, u
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($denuncias as $denuncia): ?>
+                    <?php foreach ($denuncias_receitas as $denuncia): ?>
                     <tr>
                         <td><?= htmlspecialchars($denuncia['id_denuncia']); ?></td>
                         <td><?= htmlspecialchars($denuncia['motivo']); ?></td>
@@ -93,11 +97,27 @@ $denuncias = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, u
                         <th>Ações</th>
                     </tr>
                 </thead>
-                
+                <tbody>
+                    <?php foreach ($denuncias_avaliacoes as $denuncia): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($denuncia['id_denuncia']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['id_avaliacao']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['motivo']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['receita_titulo']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['denunciante_nome']); ?></td>
+                        <td><?= htmlspecialchars($denuncia['data_denuncia']); ?></td>
+                        <td>
+                            <!-- Link para excluir a denúncia -->
+                            <a href="../processos/excluir_denuncia.php?id=<?= $denuncia['id_denuncia']; ?>" class="editar-btn" onclick="return confirm('Tem certeza que deseja excluir esta denúncia?')">Excluir Denúncia</a>
+                            <!-- Link para excluir a avaliação -->
+                            <a href="../processos/excluir_avaliacao.php?id=<?= $denuncia['id_avaliacao']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir esta avaliação?')">Excluir Avaliação</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
         </section>
     </main>
 </body>
 </html>
-
 
