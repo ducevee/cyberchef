@@ -94,7 +94,7 @@
                 if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] != $id_usuario) {
                     echo "<input type='hidden' name='id_avaliacao' value='$id_avaliacao'>";
                     echo "<input type='hidden' name='fk_receita' value='$id_receita'>";
-                    echo '<button onclick="denunciarAvaliacao()" class="botao-denunciar">Denunciar Avaliação</button>'; 
+                    echo "<button onclick='denunciarAvaliacao($id_avaliacao)' class='botao-denunciar'>Denunciar Avaliação</button>"; 
                     echo "</form>";
                 }
                 echo "</div>";
@@ -112,30 +112,6 @@
         die("Erro de banco de dados: " . $e->getMessage());
     }
     ?>
-
-    <script>
-        function toggleDropdown() {
-            var dropdownContent = document.getElementById("dropdown-content");
-            var dropbtn = document.getElementById("dropbtn");
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-                dropbtn.classList.remove("active");
-            } else {
-                dropdownContent.style.display = "block";
-                dropbtn.classList.add("active");
-                dropdownContent.style.width = dropbtn.offsetWidth + "px";
-            }
-        }
-
-        function denunciarAvaliacao(idAvaliacao) {
-            document.getElementById('idAvaliacaoDenuncia').value = idAvaliacao;
-            document.getElementById('modalDenunciaAvaliacao').style.display = 'block';
-        }
-
-        function fecharModalDenunciaAvaliacao() {
-            document.getElementById('modalDenunciaAvaliacao').style.display = 'none';
-        }
-    </script>
 
     <!-- Modal para denunciar avaliação -->
     <div id="modalDenunciaAvaliacao" class="modal">
