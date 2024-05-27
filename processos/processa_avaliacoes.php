@@ -29,7 +29,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 throw new PDOException("<script>alert('Erro ao cadastrar avaliação');</script>");
             }
         } else {
-            throw new PDOException("Erro: ID da receita ou quantidade de estrelas não está definida.");
+            $_SESSION['msg'] = "<script>alert('Erro: Quantidade de estrelas não está definida.');</script>";
         }
     } catch (PDOException $e) {
         $_SESSION['msg'] = "<p>Erro: " . $e->getMessage() . "</p>";
