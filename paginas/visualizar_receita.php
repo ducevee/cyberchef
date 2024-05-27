@@ -100,12 +100,6 @@ try {
         <p><strong>Modo de Preparo:</strong> <?= nl2br(htmlspecialchars($receita['modo_preparo'])); ?></p>
     </div>
     <?php
-if (isset($_SESSION['usuario_id'])) {
-    $id_usuario = $_SESSION['usuario_id'];
-} else {
-    header("Location: ../paginas/login.php");
-    exit(); 
-}
 ?>
 <div class="avaliacoes">
     <h1 style="font-family: 'Maven Pro', sans-serif;";>Avalie</h1>
