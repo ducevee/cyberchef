@@ -155,7 +155,6 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </li>
                 <li>
                     <a class="linksHeader" href=".">CATEGORIA</a>
-<<<<<<< HEAD
                     </li>
                 </ul>
             
@@ -173,27 +172,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 ?>
             </nav>
         </header>
-        <a href="../paginas/home_usuario.php" style="font-family: 'Maven Pro', sans-serif; font-size: 50px; margin-left: 20px;">
-    &larr; 
-</a>
-=======
-                </li>
-            </ul>
-            <?php
-                if (isset($_SESSION['usuario_id'])) {
-                    echo "<div class='user'>Bem-vindo, <b>" . htmlspecialchars($_SESSION['usuario_nome']) . "!</b></div>";
-                    echo  "<a href='../processos/logout.php' alt='Sair' title='Sair'>
-                                <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' fill='#FFF' version='1.1' id='Capa_1' width='25px' height='25px' viewBox='0 0 492.5 492.5' xml:space='preserve'>
-                                    <g>
-                                        <path d='M184.646,0v21.72H99.704v433.358h31.403V53.123h53.539V492.5l208.15-37.422v-61.235V37.5L184.646,0z M222.938,263.129   c-6.997,0-12.67-7.381,12.67-16.486c0-9.104,5.673-16.485,12.67-16.485s12.67,7.381,12.67,16.485   C235.608,255.748,229.935,263.129,222.938,263.129z'/>
-                                    </g>
-                                </svg>
-                            </a>";
-                }
-            ?>
-        </nav>
-    </header>
->>>>>>> d4f89d4a3449888045901f8283fd81fc0f1e73b4
+    <a href="../paginas/home_usuario.php" style="font-family: 'Maven Pro', sans-serif; font-size: 50px; margin-left: 20px;">&larr;</a>
     <main>
         <!-- Exibir as receitas -->
         <form class="filtros" action="listar_receita.php" method="get">
