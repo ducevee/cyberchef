@@ -31,7 +31,7 @@ $stmt = $pdo->query("SELECT id, nome, email, data_criacao FROM usuarios");
             <ul id="lista">
                 <!-- Adaptar links para funcionalidades do admin -->
                 <li>
-                <a class="linksHeader" href="./gerenciar_denuncia.php">GERENCIAR RECEITAS</a>
+                <a class="linksHeader" href="./gerenciar_denuncia.php">GERENCIAR DENÚNCIAS</a>
                 </li>
                 <li>
                 <a class="linksHeader" href="home_admin.php">GERENCIAR USUÁRIOS</a>

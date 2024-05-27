@@ -109,6 +109,7 @@ if (isset($_SESSION['usuario_id'])) {
 ?>
 <div class="avaliacoes">
     <h1 style="font-family: 'Maven Pro', sans-serif;";>Avalie</h1>
+<<<<<<< HEAD
     <p style="font-family: 'Maven Pro', sans-serif;";>Dê uma nota e adicione um cometário à essa receita!</p>
 
     <?php
@@ -139,10 +140,49 @@ if (isset($_SESSION['usuario_id'])) {
         <input type="submit" value="Cadastrar" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 14px; font-family: 'Maven Pro', sans-serif;">
         
         <br><br>
+=======
+    <p style="font-family: 'Maven Pro', sans-serif;";>Dê uma nota e adicione um comentário à essa receita!</p>
+
+
+    <?php
+    if(isset($_SESSION['msg'])){
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+
+    ?>
+
+    <form method="POST" action="../processos/processa_avaliacoes.php">
+
+        <div class="estrelas" style="font-size: 20px;">
+        <input type="radio" name="estrela" id="vazio" value="" checked>
+        <label for="estrela1"><i class="opcao fa" aria-hidden="true"></i></label>
+        <input type="radio" name="estrela" id="estrela1" value="1">
+        <label for="estrela2"><i class="opcao fa" aria-hidden="true"></i></label>
+        <input type="radio" name="estrela" id="estrela2" value="2" >
+        <label for="estrela3"><i class="opcao fa" aria-hidden="true"></i></label>
+        <input type="radio" name="estrela" id="estrela3" value="3" >
+        <label for="estrela4"><i class="opcao fa" aria-hidden="true"></i></label>
+        <input type="radio" name="estrela" id="estrela4" value="4" >
+        <label for="estrela5"><i class="opcao fa" aria-hidden="true"></i></label>
+        <input type="radio" name="estrela" id="estrela5" value="5" > <br><br>
+        <textarea name="mensagem" id="" cols="50" rows="4" placeholder="Deixe aqui sua opinião!" style="width: 350px; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></textarea> <br>
+        <input type="hidden" name="id_receita" value="<?php echo $id_receita; ?>">
+
+        <input type="submit" value="Cadastrar" style="background-color: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 14px; font-family: 'Maven Pro', sans-serif;">
+
+        <br><br>
+        <h1 style="font-family: 'Maven Pro', sans-serif;";>Avaliações</h1>
+    
+
+>>>>>>> d4f89d4a3449888045901f8283fd81fc0f1e73b4
 </div>
 </form>
 <?php include '../processos/listar_avaliacoes.php' ?>
 </body>
 </html>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d4f89d4a3449888045901f8283fd81fc0f1e73b4
