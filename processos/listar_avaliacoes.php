@@ -124,7 +124,7 @@
                 <span class="close" onclick="document.getElementById('modalDenunciaAvaliacao').style.display='none'">&times;</span>
             </div>
             <div class="modal-body">
-                <form action="../processos/denunciar_avaliacao.php" method="post">
+                <form action="../processos/denunciar_avaliacao.php" method="post" onsubmit="return validarDenuncia()">
                     <input type="hidden" name="id_avaliacao" id="idAvaliacaoDenuncia" value="">
                     <label for="motivoDenunciaAvaliacao">Motivo da Denúncia:</label>
                     <textarea id="motivoDenunciaAvaliacao" name="motivo" required></textarea>
@@ -141,6 +141,19 @@
         function denunciarAvaliacao(idAvaliacao) {
             document.getElementById('idAvaliacaoDenuncia').value = idAvaliacao;
             document.getElementById('modalDenunciaAvaliacao').style.display = 'block';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalDenunciaAvaliacao').style.display = 'none';
+        }
+
+        function validarDenuncia() {
+            var motivo = document.getElementById('motivoDenunciaAvaliacao').value.trim();
+            if (motivo.length < 10) {
+                alert('O motivo da denúncia deve conter no mínimo 10 caracteres.');
+                return false;
+            }
+            return true;
         }
 
         window.onclick = function(event) {
