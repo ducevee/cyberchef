@@ -240,7 +240,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php else: ?>
                             <!-- Botão de denunciar receita apenas para usuários logados e que não são o dono da receita -->
                             <?php if (isset($_SESSION['usuario_id'])) : ?>
-                                <form action="../processos/denunciar_receita.php" method="post">
+                                <form action="../processos/denunciar_receita.php" method="post" onsubmit="return validarMotivoDenuncia();">
                                     <input type="hidden" name="id_receita" value="<?= $receita['id_receita']; ?>">
                                     <button type="button" class="btn-denunciar" onclick="denunciarReceita(<?= $receita['id_receita']; ?>);">Denunciar Receita</button>
                                 </form>
@@ -263,7 +263,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2>Denunciar Receita</h2>
         </div>
         <div class="modal-body">
-            <form action="../processos/denunciar_receita.php" method="post">
+        <form action="../processos/denunciar_receita.php" method="post" onsubmit="return validarMotivoDenuncia();">
                 <input type="hidden" name="id_receita" id="idReceitaDenuncia" value="">
                 <label for="motivoDenuncia">Motivo da Denúncia:</label>
                 <textarea id="motivoDenuncia" name="motivo" required></textarea>
@@ -308,5 +308,19 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     function denunciarReceita(idReceita) {
         document.getElementById('idReceitaDenuncia').value = idReceita;
         document.getElementById('modalDenuncia').style.display = 'block';
+    }
+
+    function validarMotivoDenuncia() {
+    var motivo = document.getElementById('motivoDenuncia').value.trim();
+
+    // Verificar se há pelo menos uma letra no motivo e se o motivo contém pelo menos 10 letras
+    var letras = motivo.match(/[a-zA-Z]/g);
+
+    if (!letras || letras.length < 10) {
+        alert('Por favor, preencha o motivo da denúncia com pelo menos 10 letras.');
+        return false;
+    }
+
+    return true;
     }
 </script>
