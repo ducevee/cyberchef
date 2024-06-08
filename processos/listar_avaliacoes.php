@@ -69,9 +69,12 @@
                 $totalEstrelas += $qtde_estrelas;
                 $totalAvaliacoes++;
 
+                // Formatar a data no formato dia + "às" + horário sem segundos
+                $data_formatada = date('d/m/Y \à\s H:i', strtotime($created));
+
                 echo "<div class='avaliacao'>";
                 echo "<p><strong>Avaliação feita por:</strong> $nome_usuario</p>";
-                echo "<p><strong>Data:</strong> $created</p>";
+                echo "<p><strong>Data:</strong> $data_formatada</p>";
                 echo "<p><strong>Estrelas:</strong>";
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $qtde_estrelas) {
