@@ -317,7 +317,7 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     var letras = motivo.match(/[a-zA-Z]/g);
 
     if (!letras || letras.length < 10) {
-        alert('Por favor, preencha o motivo da denúncia com pelo menos 10 letras.');
+        alert('O motivo da denúncia deve conter no mínimo 10 caracteres.');
         return false;
     }
 
