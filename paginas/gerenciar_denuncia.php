@@ -4,10 +4,9 @@ session_start();
 
 // Verificar se é administrador
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
-header('Location: login.php');
-exit;
+    header('Location: login.php');
+    exit;
 }
-
 
 // Buscar denúncias de receitas
 $denuncias_receitas = $pdo->query("SELECT Denuncia.*, Receita.titulo AS receita_titulo, usuarios.nome AS denunciante_nome FROM Denuncia JOIN Receita ON Denuncia.fk_id_receita = Receita.id_receita JOIN usuarios ON Denuncia.fk_id_usuario = usuarios.id")->fetchAll(PDO::FETCH_ASSOC);
@@ -27,17 +26,17 @@ $denuncias_avaliacoes = $pdo->query("SELECT Denuncia.*, Avaliacao.id_avaliacao, 
     <header>
         <nav class="navHeader">
             <a href="index.html" id="link-logo" title="Página inicial">
-            <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
+                <img src="../css/img/cyber_chef_logo.png" alt="logo" id="logo">
             </a>
             <div class="search-container">
-            <!-- Omitir funcionalidades de pesquisa se não forem relevantes -->
+                <!-- Omitir funcionalidades de pesquisa se não forem relevantes -->
             </div>
             <ul id="lista">
                 <li>
-                <a class="linksHeader" href="gerenciar_denuncia.php">GERENCIAR DENÚNCIAS</a>
+                    <a class="linksHeader" href="gerenciar_denuncia.php">GERENCIAR DENÚNCIAS</a>
                 </li>
                 <li>
-                <a class="linksHeader" href="home_admin.php">GERENCIAR USUÁRIOS</a>
+                    <a class="linksHeader" href="home_admin.php">GERENCIAR USUÁRIOS</a>
                 </li>
             </ul>
             <div class="user">Bem-vindo, Admin!</div>
@@ -75,7 +74,7 @@ $denuncias_avaliacoes = $pdo->query("SELECT Denuncia.*, Avaliacao.id_avaliacao, 
                         <td><?= htmlspecialchars($denuncia['motivo']); ?></td>
                         <td><?= htmlspecialchars($denuncia['receita_titulo']); ?></td>
                         <td><?= htmlspecialchars($denuncia['denunciante_nome']); ?></td>
-                        <td><?= htmlspecialchars($denuncia['data_denuncia']); ?></td>
+                        <td><?= date('d/m/Y \à\s H:i', strtotime($denuncia['data_denuncia'])); ?></td>
                         <td>
                             <a href="../processos/excluir_denuncia.php?id=<?= $denuncia['id_denuncia']; ?>" class="editar-btn" onclick="return confirm('Tem certeza que deseja excluir esta denúncia?')">Excluir Denúncia</a>
                             <a href="../processos/excluir_receita.php?id=<?= $denuncia['fk_id_receita']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir esta receita?')">Excluir Receita</a>
@@ -105,11 +104,9 @@ $denuncias_avaliacoes = $pdo->query("SELECT Denuncia.*, Avaliacao.id_avaliacao, 
                         <td><?= htmlspecialchars($denuncia['motivo']); ?></td>
                         <td><?= htmlspecialchars($denuncia['receita_titulo']); ?></td>
                         <td><?= htmlspecialchars($denuncia['denunciante_nome']); ?></td>
-                        <td><?= htmlspecialchars($denuncia['data_denuncia']); ?></td>
+                        <td><?= date('d/m/Y \à\s H:i', strtotime($denuncia['data_denuncia'])); ?></td>
                         <td>
-                            <!-- Link para excluir a denúncia -->
                             <a href="../processos/excluir_denuncia.php?id=<?= $denuncia['id_denuncia']; ?>" class="editar-btn" onclick="return confirm('Tem certeza que deseja excluir esta denúncia?')">Excluir Denúncia</a>
-                            <!-- Link para excluir a avaliação -->
                             <a href="../processos/excluir_avaliacao.php?id=<?= $denuncia['id_avaliacao']; ?>" class="excluir-btn" onclick="return confirm('Tem certeza que deseja excluir esta avaliação?')">Excluir Avaliação</a>
                         </td>
                     </tr>
@@ -120,4 +117,3 @@ $denuncias_avaliacoes = $pdo->query("SELECT Denuncia.*, Avaliacao.id_avaliacao, 
     </main>
 </body>
 </html>
-
